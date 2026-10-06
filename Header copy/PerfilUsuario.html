@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario - SkillBridge AI</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+    </style>
+</head>
+<body>
+
+<style>
+/* ============================================================
+   VARIABLES (Main.CSS embebido)
+   ------------------------------------------------------------
+   Incluye una variable de color por categoría, igual que en
+   el Main.CSS, para que cada preferencia tenga su propio color.
+   ============================================================ */
+:root {
+    --color-white: 255 255 255;
+    --color-background: 15 23 42;
+    --color-primary: 40 97 216;
+    --color-dark: 26 26 26;
+    --color-text: 95 95 95;
+    --color-border: 223 223 223;
+
+    --status-active: 16 185 129;
+    --status-in-progress: 255 169 23;
+    --status-cancelled: 218 35 35;
+
+    --color-primary-10: rgb(var(--color-primary) / 10%);
+
+    /* ---------- Colores por categoría de preferencia ---------- */
+    --category-frontend: 59 130 246;
+    --category-backend: 16 185 129;
+    --category-full-stack: 139 92 246;
+    --category-mobile: 6 182 212;
+    --category-desktop: 99 102 241;
+    --category-databases: 245 158 11;
+    --category-apis: 20 184 166;
+    --category-devops: 249 115 22;
+    --category-cloud: 14 165 233;
+    --category-cybersecurity: 239 68 68;
+    --category-testing: 234 179 8;
+    --category-videogames: 236 72 153;
+    --category-ai: 217 70 239;
+    --category-blockchain: 124 58 237;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    padding: 50px 16px 80px;
+
+    background-color: #f7f9fd;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: rgb(var(--color-dark));
+}
+
+
+/* ============================================================
+   ESTRUCTURA
+   ============================================================ */
+.profile-section {
+    width: 100%;
+    max-width: 640px;
+
+    margin: 0 auto;
+}
+
+.profile-section__header {
+    margin-bottom: 26px;
+
+    text-align: center;
+}
+
+.profile-section__title {
+    font-size: clamp(24px, 3vw, 30px);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.profile-section__subtitle {
+    margin-top: 6px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    color: rgb(var(--color-text));
+}
+
+.profile-card {
+    padding: 0;
+
+    background-color: rgb(var(--color-white));
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 24px;
+
+    box-shadow: 0 8px 30px rgb(var(--color-background) / 6%);
+
+    overflow: hidden;
+
+    animation: cardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ============================================================
+   BANNER + AVATAR
+   ============================================================ */
+.profile-card__banner {
+    position: relative;
+
+    height: 110px;
+
+    background: linear-gradient(135deg, #093b8c 0%, #0959db 60%, #2f7cf6 100%);
+}
+
+.profile-card__avatar {
+    position: absolute;
+    left: 50%;
+    bottom: -45px;
+
+    width: 100px;
+    height: 100px;
+
+    border: 5px solid rgb(var(--color-white));
+    border-radius: 50%;
+
+    background-color: var(--color-primary-10);
+
+    transform: translateX(-50%);
+
+    overflow: hidden;
+
+    box-shadow: 0 6px 18px rgb(var(--color-background) / 15%);
+}
+
+.profile-card__avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.profile-card__initials {
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg, #0959db, #2f7cf6);
+
+    font-size: 34px;
+    font-weight: 800;
+
+    color: rgb(var(--color-white));
+}
+
+.profile-card__avatar-edit {
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+
+    display: flex;
+
+    width: 32px;
+    height: 32px;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 3px solid rgb(var(--color-white));
+    border-radius: 50%;
+
+    background-color: rgb(var(--color-primary));
+
+    font-size: 14px;
+    color: rgb(var(--color-white));
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.profile-card__avatar-edit:hover {
+    background-color: rgb(35 84 190);
+}
+
+.profile-card__avatar-edit input {
+    display: none;
+}
+
+
+/* ============================================================
+   INFORMACIÓN PRINCIPAL
+   ============================================================ */
+.profile-card__info {
+    display: flex;
+    flex-direction: column;
+
+    padding: 58px 34px 30px;
+
+    gap: 10px;
+    align-items: center;
+
+    text-align: center;
+}
+
+.profile-card__name {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+}
+
+.profile-card__email {
+    display: flex;
+
+    gap: 7px;
+    align-items: center;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    color: rgb(var(--color-text));
+}
+
+.profile-card__email i {
+    font-size: 16px;
+}
+
+.profile-card__badges {
+    display: flex;
+
+    gap: 10px;
+}
+
+.badge {
+    display: inline-flex;
+
+    padding: 6px 14px;
+
+    gap: 6px;
+    align-items: center;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.badge i {
+    font-size: 13px;
+}
+
+.badge--role-cliente    { background-color: rgb(var(--status-active) / 12%);  color: rgb(var(--status-active)); }
+.badge--role-admin      { background-color: var(--color-primary-10);           color: rgb(var(--color-primary)); }
+.badge--role-proveedor  { background-color: rgb(139 92 246 / 12%);             color: rgb(139 92 246); }
+
+.badge--status-active    { background-color: rgb(var(--status-active) / 12%);      color: rgb(var(--status-active)); }
+.badge--status-inactive  { background-color: rgb(var(--status-cancelled) / 12%);   color: rgb(var(--status-cancelled)); }
+
+.profile-card__bio {
+    max-width: 420px;
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.6;
+
+    color: rgb(var(--color-text));
+}
+
+
+/* ============================================================
+   SEPARADOR CON TÍTULO
+   ============================================================ */
+.profile-card__divider {
+    display: flex;
+
+    margin: 6px 34px 20px;
+
+    gap: 10px;
+    align-items: center;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    color: rgb(var(--color-dark));
+}
+
+.profile-card__divider i {
+    font-size: 17px;
+    color: rgb(var(--color-primary));
+}
+
+.profile-card__divider::after {
+    content: "";
+
+    flex: 1;
+    height: 1px;
+
+    background-color: rgb(var(--color-border));
+}
+
+
+/* ============================================================
+   DATOS GENERALES
+   ============================================================ */
+.profile-card__data {
+    display: grid;
+
+    margin: 0 34px 10px;
+
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.data-item {
+    display: flex;
+    flex-direction: column;
+
+    padding: 14px 16px;
+
+    gap: 4px;
+
+    background-color: #f8fafd;
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 14px;
+}
+
+.data-item__label {
+    display: flex;
+
+    gap: 6px;
+    align-items: center;
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+
+    color: rgb(var(--color-text) / 70%);
+}
+
+.data-item__label i {
+    font-size: 13px;
+    color: rgb(var(--color-primary));
+}
+
+.data-item__value {
+    font-size: 14px;
+    font-weight: 700;
+
+    color: rgb(var(--color-dark));
+}
+
+
+/* ============================================================
+   CAMPOS EDITABLES
+   ============================================================ */
+.profile-card__form {
+    display: flex;
+    flex-direction: column;
+
+    padding: 0 34px 34px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 18px;
+
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    color: rgb(var(--color-text));
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    min-height: 52px;
+
+    padding: 14px 16px;
+
+    background-color: #f4f6fb;
+    border: 1px solid transparent;
+    border-radius: 14px;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    color: rgb(var(--color-dark));
+
+    outline: none;
+
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input::placeholder {
+    color: rgb(var(--color-text) / 60%);
+}
+
+.form-input:focus,
+.form-select:focus {
+    background-color: rgb(var(--color-white));
+    border-color: rgb(var(--color-primary));
+    box-shadow: 0 0 0 4px rgb(var(--color-primary) / 12%);
+}
+
+textarea.form-input {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.form-select {
+    appearance: none;
+
+    padding-right: 44px;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%235f5f5f' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+
+    cursor: pointer;
+}
+
+.form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.form-field {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.form-field__icon {
+    position: absolute;
+    left: 16px;
+
+    font-size: 18px;
+    color: rgb(var(--color-text) / 70%);
+
+    pointer-events: none;
+}
+
+.form-field .form-input {
+    padding-left: 46px;
+}
+
+.form-input:disabled {
+    background-color: #eceff5;
+    color: rgb(var(--color-text) / 70%);
+
+    cursor: not-allowed;
+}
+
+
+/* ============================================================
+   PREFERENCIAS (labels de categorías)
+   ------------------------------------------------------------
+   Cada chip recibe su color mediante la variable --cat,
+   que apunta a la variable de su categoría en el :root.
+   ============================================================ */
+.preference-chips {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.preference-chip {
+    display: flex;
+
+    padding: 10px 16px;
+
+    gap: 8px;
+    align-items: center;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 25px;
+
+    background-color: rgb(var(--color-white));
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+
+    color: rgb(var(--color-text));
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+    animation: chipIn 0.4s ease both;
+}
+
+/* Punto de color de la categoría */
+.preference-chip__dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background-color: rgb(var(--cat));
+}
+
+.preference-chip:hover {
+    border-color: rgb(var(--cat));
+    color: rgb(var(--cat));
+}
+
+/* Estado seleccionado: usa el color de su categoría */
+.preference-chip.is-selected {
+    border-color: rgb(var(--cat));
+    background-color: rgb(var(--cat) / 12%);
+    color: rgb(var(--cat));
+
+    box-shadow: 0 0 0 3px rgb(var(--cat) / 12%);
+}
+
+/* Animación escalonada de entrada */
+.preference-chips .preference-chip:nth-child(1)  { animation-delay: 0.02s; }
+.preference-chips .preference-chip:nth-child(2)  { animation-delay: 0.04s; }
+.preference-chips .preference-chip:nth-child(3)  { animation-delay: 0.06s; }
+.preference-chips .preference-chip:nth-child(4)  { animation-delay: 0.08s; }
+.preference-chips .preference-chip:nth-child(5)  { animation-delay: 0.10s; }
+.preference-chips .preference-chip:nth-child(6)  { animation-delay: 0.12s; }
+.preference-chips .preference-chip:nth-child(7)  { animation-delay: 0.14s; }
+.preference-chips .preference-chip:nth-child(8)  { animation-delay: 0.16s; }
+.preference-chips .preference-chip:nth-child(9)  { animation-delay: 0.18s; }
+.preference-chips .preference-chip:nth-child(10) { animation-delay: 0.20s; }
+.preference-chips .preference-chip:nth-child(11) { animation-delay: 0.22s; }
+.preference-chips .preference-chip:nth-child(12) { animation-delay: 0.24s; }
+.preference-chips .preference-chip:nth-child(13) { animation-delay: 0.26s; }
+.preference-chips .preference-chip:nth-child(14) { animation-delay: 0.28s; }
+
+@keyframes chipIn {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Contador de seleccionadas */
+.preference-count {
+    margin-top: 14px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: rgb(var(--color-text));
+}
+
+.preference-count strong {
+    color: rgb(var(--color-primary));
+}
+
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+.form-actions {
+    display: flex;
+
+    margin-top: 8px;
+
+    gap: 12px;
+}
+
+.form-button {
+    width: 100%;
+    min-height: 52px;
+
+    border: none;
+    border-radius: 14px;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.form-button:active {
+    transform: scale(0.98);
+}
+
+.form-button--primary {
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-white));
+
+    box-shadow: 0 6px 16px rgb(var(--color-primary) / 35%);
+}
+
+.form-button--primary:hover {
+    background-color: rgb(35 84 190);
+}
+
+.form-button--ghost {
+    background-color: transparent;
+    border: 1px solid rgb(var(--color-border));
+    color: rgb(var(--color-text));
+}
+
+.form-button--ghost:hover {
+    background-color: #f4f6fb;
+    color: rgb(var(--color-dark));
+}
+
+
+/* ============================================================
+   SELECTOR DEMO DE ROL
+   ============================================================ */
+.demo-roles {
+    display: flex;
+
+    margin: 30px auto 0;
+
+    gap: 10px;
+    justify-content: center;
+
+    flex-wrap: wrap;
+}
+
+.demo-roles button {
+    padding: 9px 18px;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 12px;
+
+    background-color: rgb(var(--color-white));
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+
+    color: rgb(var(--color-text));
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.demo-roles button:hover {
+    border-color: rgb(var(--color-primary));
+    color: rgb(var(--color-primary));
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 600px) {
+    .profile-card__data,
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-card__info,
+    .profile-card__form {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+    .profile-card__divider {
+        margin-left: 22px;
+        margin-right: 22px;
+    }
+
+    .profile-card__data {
+        margin-left: 22px;
+        margin-right: 22px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+}
+</style>
+
+<!-- Boxicons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+<link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+
+
+<!-- ============================================================
+     CARD DE PERFIL DE USUARIO (app_users) + PREFERENCIAS
+============================================================ -->
+<section class="profile-section">
+
+    <div class="profile-section__header">
+        <h1 class="profile-section__title">Mi Perfil</h1>
+        <p class="profile-section__subtitle">Gestiona tu información personal y preferencias de aprendizaje.</p>
+    </div>
+
+    <div class="profile-card">
+
+        <!-- Banner + avatar -->
+        <div class="profile-card__banner">
+            <div class="profile-card__avatar">
+                <span class="profile-card__initials">JD</span>
+                <label class="profile-card__avatar-edit" title="Cambiar foto">
+                    <i class="bx bx-camera"></i>
+                    <input type="file" id="avatar-input" accept="image/*">
+                </label>
+            </div>
+        </div>
+
+
+        <!-- Información principal -->
+        <div class="profile-card__info">
+
+            <h2 class="profile-card__name">Jesús David Lucena Quintero</h2>
+
+            <span class="profile-card__email">
+                <i class="bx bx-envelope"></i>
+                <span>jesus.lucena@ejemplo.com</span>
+            </span>
+
+            <div class="profile-card__badges">
+                <span class="badge badge--role-admin" id="role-badge">
+                    <i class="bx bx-shield-quarter"></i> Admin
+                </span>
+                <span class="badge badge--status-active">
+                    <i class="bx bx-check-circle"></i> Activo
+                </span>
+            </div>
+
+            <p class="profile-card__bio">
+                Desarrollador full-stack apasionado por la arquitectura de software,
+                microservicios y soluciones en la nube.
+            </p>
+
+        </div>
+
+
+        <!-- Información de la cuenta -->
+        <h3 class="profile-card__divider"><i class="bx bx-id-card"></i> Información de la cuenta</h3>
+
+        <div class="profile-card__data">
+
+            <div class="data-item">
+                <span class="data-item__label"><i class="bx bx-calendar-plus"></i> Miembro desde</span>
+                <span class="data-item__value">12 Mar 2024</span>
+            </div>
+
+            <div class="data-item">
+                <span class="data-item__label"><i class="bx bx-refresh"></i> Última actualización</span>
+                <span class="data-item__value">02 Oct 2026</span>
+            </div>
+
+            <div class="data-item">
+                <span class="data-item__label"><i class="bx bx-cake"></i> Fecha de nacimiento</span>
+                <span class="data-item__value">15 Jun 1998</span>
+            </div>
+
+            <div class="data-item">
+                <span class="data-item__label"><i class="bx bx-user"></i> Género</span>
+                <span class="data-item__value">Masculino</span>
+            </div>
+
+        </div>
+
+
+        <!-- Editar información -->
+        <h3 class="profile-card__divider"><i class="bx bx-edit-alt"></i> Editar información</h3>
+
+        <form class="profile-card__form" novalidate>
+
+            <div class="form-group">
+                <label class="form-label" for="edit-name">Nombre completo</label>
+                <div class="form-field">
+                    <i class="bx bx-user form-field__icon"></i>
+                    <input class="form-input" id="edit-name" type="text" value="Jesús David Lucena Quintero">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="edit-email">Correo electrónico</label>
+                    <div class="form-field">
+                        <i class="bx bx-envelope form-field__icon"></i>
+                        <input class="form-input" id="edit-email" type="email" value="jesus.lucena@ejemplo.com" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="edit-role">Rol</label>
+                    <select class="form-select" id="edit-role" disabled>
+                        <option value="admin" selected>Admin</option>
+                        <option value="cliente">Cliente</option>
+                        <option value="proveedor">Proveedor</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="edit-bio">Descripción corta</label>
+                <textarea class="form-input" id="edit-bio" maxlength="500">Desarrollador full-stack apasionado por la arquitectura de software, microservicios y soluciones en la nube.</textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="edit-gender">Género</label>
+                    <select class="form-select" id="edit-gender">
+                        <option value="masculino" selected>Masculino</option>
+                        <option value="femenino">Femenino</option>
+                        <option value="otro">Otro</option>
+                        <option value="prefiero-no-decir">Prefiero no decir</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="edit-birth">Fecha de nacimiento</label>
+                    <input class="form-input" id="edit-birth" type="date" value="1998-06-15">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="edit-capacity">Capacidad (servicios / tutorías simultáneas)</label>
+                <input class="form-input" id="edit-capacity" type="number" min="1" value="10">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="edit-objectives">Objetivos de aprendizaje</label>
+                <textarea class="form-input" id="edit-objectives">Dominar arquitectura hexagonal, despliegues con Docker y Kubernetes, y diseño de microservicios con Spring Boot.</textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="edit-prerequisites">Prerequisitos</label>
+                <textarea class="form-input" id="edit-prerequisites">Conocimientos en Java, Git, bases de datos relacionales y fundamentos de redes.</textarea>
+            </div>
+
+        </form>
+
+
+        <!-- ============================================================
+             PREFERENCIAS: labels de categorías con su color del root
+        ============================================================ -->
+        <h3 class="profile-card__divider"><i class="bx bx-heart"></i> Preferencias</h3>
+
+        <form class="profile-card__form" novalidate>
+
+            <div class="form-group">
+                <label class="form-label">Categorías de interés</label>
+
+                <!-- Cada chip define --cat con la variable de su categoría -->
+                <div class="preference-chips" id="preference-chips">
+
+                    <button type="button" class="preference-chip is-selected" style="--cat: var(--category-frontend);">
+                        <span class="preference-chip__dot"></span> Frontend
+                    </button>
+
+                    <button type="button" class="preference-chip is-selected" style="--cat: var(--category-backend);">
+                        <span class="preference-chip__dot"></span> Backend
+                    </button>
+
+                    <button type="button" class="preference-chip" style="--cat: var(--category-full-stack);">
+                        <span class="preference-chip__dot"></span> Full Stack
+                    </button>
+
+                    <button type="button" class="preference-chip" style="--cat: var(--category-mobile);">
+                        <span class="preference-chip__dot"></span> Mobile
+                    </button>
+
+                    <button type="button" class="preference-chip" style="--cat: var(--category-desktop);">
+                        <span class="preference-chip__dot"></span> Desktop
+                    </button>
+
+                    <button type="button" class="preference-chip" style="--cat: var(--category-databases);">
+                        <span class="preference-chip__dot"></span> Bases de Datos
+                    </button>
+
+                    <button type="button" class="preference-chip" style="--cat: var(--category-apis);">
+                        <span class="preference-chip__dot"></span> APIs
+                    </button>
+
+                    <button type="button" class="preference-chip" style="--cat: var(--category-devops);">
+                        <span class="preference-chip__dot"></span> DevOps
+                    </button>
+
+                    <button type="button" class="preference-chip is-selected" style="--cat: var(--category-cloud);">
+                        <span class="preference-chip__dot"></span> Cloud
+                    </button>
+
+                    <button type="button" class="preference-chip" style="--cat: var(--category-cybersecurity);">
+                        <span class="preference-chip__dot"></span> Ciberseguridad
+                    </button>
+
+                    <button type="button" class="preference-chip" style="--cat: var(--category-testing);">
+                        <span class="preference-chip__dot"></span> Testing
+                    </button>
+
+                    <button type="button" class="preference-chip" style="--cat: var(--category-videogames);">
+                        <span class="preference-chip__dot"></span> Videojuegos
+                    </button>
+
+                    <button type="button" class="preference-chip" style="--cat: var(--category-ai);">
+                        <span class="preference-chip__dot"></span> IA
+                    </button>
+
+                    <button type="button" class="preference-chip" style="--cat: var(--category-blockchain);">
+                        <span class="preference-chip__dot"></span> Blockchain
+                    </button>
+
+                </div>
+
+                <p class="preference-count" id="preference-count">
+                    <strong>3</strong> categorías seleccionadas
+                </p>
+            </div>
+
+            <div class="form-actions">
+                <button class="form-button form-button--ghost" type="button">Cancelar</button>
+                <button class="form-button form-button--primary" type="button">Guardar Preferencias</button>
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- Selector demo de rol -->
+    <div class="demo-roles">
+        <button type="button" data-role="admin">Simular Admin</button>
+        <button type="button" data-role="cliente">Simular Cliente</button>
+        <button type="button" data-role="proveedor">Simular Proveedor</button>
+    </div>
+
+</section>
+
+
+<script>
+    /* ============================================================
+       CAMBIO DE AVATAR (demo)
+    ============================================================ */
+    document.getElementById('avatar-input').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const url = URL.createObjectURL(file);
+
+        document.querySelector('.profile-card__avatar').innerHTML = `
+            <img src="${url}" alt="Foto de perfil">
+            <label class="profile-card__avatar-edit" title="Cambiar foto">
+                <i class="bx bx-camera"></i>
+                <input type="file" id="avatar-input" accept="image/*">
+            </label>
+        `;
+    });
+
+
+    /* ============================================================
+       BADGES DE ROL
+    ============================================================ */
+    const ROLE_BADGES = {
+        admin:      { className: 'badge badge--role-admin',     icon: 'bx-shield-quarter', label: 'Admin' },
+        cliente:    { className: 'badge badge--role-cliente',   icon: 'bx-user',           label: 'Cliente' },
+        proveedor:  { className: 'badge badge--role-proveedor', icon: 'bx-briefcase',      label: 'Proveedor' }
+    };
+
+    function setRole(role) {
+        const badge = ROLE_BADGES[role];
+        if (!badge) return;
+
+        const el = document.getElementById('role-badge');
+        el.className = badge.className;
+        el.innerHTML = `<i class="bx ${badge.icon}"></i> ${badge.label}`;
+
+        document.getElementById('edit-role').value = role;
+    }
+
+    document.querySelectorAll('.demo-roles button').forEach(btn => {
+        btn.addEventListener('click', () => setRole(btn.dataset.role));
+    });
+
+
+    /* ============================================================
+       PREFERENCIAS: chips seleccionables + contador
+    ============================================================ */
+    const chipsContainer = document.getElementById('preference-chips');
+    const countLabel     = document.getElementById('preference-count');
+
+    function updateCount() {
+        const total = chipsContainer.querySelectorAll('.preference-chip.is-selected').length;
+        countLabel.innerHTML = `<strong>${total}</strong> categoría${total !== 1 ? 's' : ''} seleccionada${total !== 1 ? 's' : ''}`;
+    }
+
+    chipsContainer.addEventListener('click', (e) => {
+        const chip = e.target.closest('.preference-chip');
+        if (!chip) return;
+
+        chip.classList.toggle('is-selected');
+        updateCount();
+    });
+</script>
+
+</body>
+</html>

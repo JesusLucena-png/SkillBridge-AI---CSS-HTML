@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - SkillBridge AI</title>
+    <link rel="stylesheet" href="../../Main.CSS">
+    <link rel="stylesheet" href="./InicioDeSecion.CSS">
+    <link rel="icon" type="image/x-icon" href="../../Img/Vector.jpg">
+
+    <!-- Basic Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <!-- Filled Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+    <!-- Brand Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+<base target="_blank">
+</head>
+<body>
+    <section id="login-section" class="login-section">
+
+        <!-- Información / Bienvenida -->
+        <div class="login-section__welcome">
+
+            <div class="login-section__logo">
+                <img
+                    id="login-logo"
+                    class="login-section__logo-img"
+                    src="../../Img/Group 22 (1).svg"
+                    alt="Logo de la plataforma"
+                >
+            </div>
+
+            <div class="login-section__welcome-title">
+                <h1 id="welcome-title">
+                    Bienvenido de nuevo a la plataforma integradora.
+                </h1>
+            </div>
+
+            <div class="login-section__welcome-description">
+                <p id="welcome-description">
+                    Accede a tus servicios, configuraciones de arquitectura y
+                    asistente de IA en un entorno profesional diseñado para
+                    desarrolladores.
+                </p>
+            </div>
+
+            <div class="login-section__features">
+
+                <div class="login-section__feature">
+                    <i class="bx bx-hexagon"></i>
+                    <div class="login-section__feature-text">
+                        <span><strong>Hex</strong> Arquitectura</span>
+                    </div>
+                </div>
+
+                <div class="login-section__feature">
+                    <i class="bx bx-sparkles-alt"></i>
+                    <div class="login-section__feature-text">
+                        <strong>Asistente IA</strong>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Formularios -->
+        <div id="login-form-container" class="login-section__form-container">
+
+            <!-- ===== INICIAR SESIÓN ===== -->
+            <div id="form-login" class="login-section__form-view">
+
+                <div class="login-section__form-header">
+                    <h2>Iniciar Sesión</h2>
+                    <h3>Ingresa tus credenciales para continuar.</h3>
+                </div>
+
+                <form class="login-form">
+
+                    <div class="login-form__group">
+                        <label for="login-email" class="login-form__label">
+                            Correo Electrónico
+                        </label>
+                        <div class="login-form__field">
+                            <i class="bx bx-envelope login-form__field-icon"></i>
+                            <input
+                                id="login-email"
+                                class="login-form__input"
+                                type="email"
+                                placeholder="usuario@ejemplo.com"
+                                autocomplete="email"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="login-form__group">
+                        <label for="login-password" class="login-form__label">
+                            Contraseña
+                        </label>
+                        <div class="login-form__field">
+                            <i class="bx bx-lock login-form__field-icon"></i>
+                            <input
+                                id="login-password"
+                                class="login-form__input"
+                                type="password"
+                                placeholder="••••••••"
+                                autocomplete="current-password"
+                            >
+                            <button type="button" class="login-form__field-toggle toggle-password">
+                                <i class="bx bx-show"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="login-form__options">
+                        <div class="login-form__remember">
+                            <input id="remember-session" class="login-form__checkbox" type="checkbox">
+                            <label for="remember-session">Recordar mi sesión</label>
+                        </div>
+                        <div class="login-form__forgot">
+                            <a href="#">¿Olvidaste tu contraseña?</a>
+                        </div>
+                    </div>
+
+                    <div class="login-form__submit">
+                        <button class="login-form__button" type="button">
+                            Iniciar Sesión
+                        </button>
+                    </div>
+
+                </form>
+
+                <div class="login-section__register">
+                    <span>¿Aún no tienes una cuenta?</span>
+                    <a href="#" id="go-to-register">Regístrate gratis</a>
+                </div>
+
+            </div>
+
+
+            <!-- ===== CREAR CUENTA (Nombre + 2 contraseñas) ===== -->
+            <div id="form-register" class="login-section__form-view" hidden>
+
+                <div class="login-section__form-header">
+                    <h2>Crear Cuenta</h2>
+                    <h3>Completa tus datos para registrarte.</h3>
+                </div>
+
+                <form class="login-form">
+
+                    <div class="login-form__group">
+                        <label for="register-name" class="login-form__label">
+                            Nombre Completo
+                        </label>
+                        <div class="login-form__field">
+                            <i class="bx bx-user login-form__field-icon"></i>
+                            <input
+                                id="register-name"
+                                class="login-form__input"
+                                type="text"
+                                placeholder="Juan Pérez"
+                                autocomplete="name"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="login-form__group">
+                        <label for="register-email" class="login-form__label">
+                            Correo Electrónico
+                        </label>
+                        <div class="login-form__field">
+                            <i class="bx bx-envelope login-form__field-icon"></i>
+                            <input
+                                id="register-email"
+                                class="login-form__input"
+                                type="email"
+                                placeholder="usuario@ejemplo.com"
+                                autocomplete="email"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="login-form__group">
+                        <label for="register-password" class="login-form__label">
+                            Contraseña
+                        </label>
+                        <div class="login-form__field">
+                            <i class="bx bx-lock login-form__field-icon"></i>
+                            <input
+                                id="register-password"
+                                class="login-form__input"
+                                type="password"
+                                placeholder="••••••••"
+                                autocomplete="new-password"
+                            >
+                            <button type="button" class="login-form__field-toggle toggle-password">
+                                <i class="bx bx-show"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="login-form__group">
+                        <label for="register-password-confirm" class="login-form__label">
+                            Confirmar Contraseña
+                        </label>
+                        <div class="login-form__field">
+                            <i class="bx bx-lock login-form__field-icon"></i>
+                            <input
+                                id="register-password-confirm"
+                                class="login-form__input"
+                                type="password"
+                                placeholder="••••••••"
+                                autocomplete="new-password"
+                            >
+                            <button type="button" class="login-form__field-toggle toggle-password">
+                                <i class="bx bx-show"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="login-form__submit">
+                        <button class="login-form__button" type="button">
+                            Crear Cuenta
+                        </button>
+                    </div>
+
+                </form>
+
+                <div class="login-section__register">
+                    <span>¿Ya tienes una cuenta?</span>
+                    <a href="#" id="go-to-login">Inicia sesión</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script>
+        // Toggle mostrar/ocultar contraseña
+        document.querySelectorAll('.toggle-password').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = btn.parentElement.querySelector('input');
+                const show = input.type === 'password';
+                input.type = show ? 'text' : 'password';
+                btn.querySelector('i').className = show ? 'bx bx-hide' : 'bx bx-show';
+            });
+        });
+
+        // Efecto de cambio entre formularios
+        const formLogin = document.getElementById('form-login');
+        const formRegister = document.getElementById('form-register');
+        const title = document.getElementById('welcome-title');
+        const description = document.getElementById('welcome-description');
+
+        const TEXTS = {
+            login: {
+                title: 'Bienvenido de nuevo a la plataforma integradora.',
+                description: 'Accede a tus servicios, configuraciones de arquitectura y asistente de IA en un entorno profesional diseñado para desarrolladores.'
+            },
+            register: {
+                title: 'Crea tu cuenta y empieza a construir.',
+                description: 'Regístrate para acceder a las herramientas de arquitectura Hex y al asistente de IA, todo en un solo lugar.'
+            }
+        };
+
+        function animateText(t) {
+            title.style.opacity = 0;
+            description.style.opacity = 0;
+            setTimeout(() => {
+                title.textContent = t.title;
+                description.textContent = t.description;
+                title.style.opacity = 1;
+                description.style.opacity = 1;
+            }, 250);
+        }
+
+        function restartAnimation(el, fromRight) {
+            el.classList.remove('login-section__form-view--from-right');
+            if (fromRight) el.classList.add('login-section__form-view--from-right');
+            el.hidden = false;
+            void el.offsetWidth; // reinicia la animación
+            el.style.animation = 'none';
+            void el.offsetWidth;
+            el.style.animation = '';
+        }
+
+        document.getElementById('go-to-register').addEventListener('click', e => {
+            e.preventDefault();
+            formLogin.hidden = true;
+            restartAnimation(formRegister, true);
+            animateText(TEXTS.register);
+        });
+
+        document.getElementById('go-to-login').addEventListener('click', e => {
+            e.preventDefault();
+            formRegister.hidden = true;
+            restartAnimation(formLogin, false);
+            animateText(TEXTS.login);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+:root {
+  --color-white: 255 255 255;
+  --color-background: 15 23 42;
+  --color-primary: 40 97 216;
+  --color-dark: 26 26 26;
+  --color-text: 95 95 95;
+  --color-border: 223 223 223;
+
+  --status-active: 16 185 129;
+  --status-in-progress: 255 169 23;
+  --status-cancelled: 218 35 35;
+
+  --category-frontend: 59 130 246;
+  --category-backend: 16 185 129;
+  --category-full-stack: 139 92 246;
+  --category-mobile: 6 182 212;
+  --category-desktop: 99 102 241;
+  --category-databases: 245 158 11;
+  --category-apis: 20 184 166;
+  --category-devops: 249 115 22;
+  --category-cloud: 14 165 233;
+  --category-cybersecurity: 239 68 68;
+  --category-testing: 234 179 8;
+  --category-videogames: 236 72 153;
+  --category-ai: 217 70 239;
+  --category-blockchain: 124 58 237;
+
+  --shadow: 0 0 8px rgb(95 95 95);
+}
+
+*{
+  padding: 0%;
+  margin: 0%;
+
+  box-sizing: border-box;
+}

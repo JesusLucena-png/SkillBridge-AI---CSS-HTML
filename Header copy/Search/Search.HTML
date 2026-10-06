@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../Search/Search.CSS">
+
+     <!-- Basic Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <!-- Filled Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+    <!-- Brand Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <section class="search-section" style="padding-top: 100px;">
+
+        <div class="search-section__controls">
+
+            <!-- Buscador -->
+            <div class="search-box" id="search-box">
+                <i class="bx bx-search-big search-box__icon "></i>
+                <input
+                    type="text"
+                    class="search-box__input"
+                    placeholder="Buscar servicio"
+                    aria-label="Buscar servicio"
+                >
+            </div>
+
+            <data class="search-box__results" id="search-results">
+                <!-- Select -->
+                <div class="select-box">
+
+                    <select
+                        id="service-select"
+                        class="service-select"
+                        aria-label="Seleccionar categoría"
+                    >
+                        <option value="" selected>All</option>
+
+                        <option value="frontend">Frontend</option>
+                        <option value="backend">Backend</option>
+                        <option value="full-stack">Full Stack</option>
+                        <option value="desarrollo-movil">Desarrollo móvil</option>
+                        <option value="escritorio">Escritorio</option>
+                        <option value="bases-de-datos">Bases de datos</option>
+                        <option value="apis-servicios">APIs y servicios</option>
+                        <option value="devops">DevOps</option>
+                        <option value="cloud">Cloud</option>
+                        <option value="ciberseguridad">Ciberseguridad</option>
+                        <option value="testing">Testing</option>
+                        <option value="videojuegos">Videojuegos</option>
+                        <option value="ia">IA</option>
+                        <option value="blockchain">Blockchain</option>
+                    </select>
+
+                </div>
+
+
+                <!-- Select -->
+                <div class="select-box">
+
+                    <select
+                        id="service-select"
+                        class="service-select"
+                        aria-label="Ordenar servicios"
+                    >
+                        <option value="all" selected>All</option>
+
+                        <option value="az">A - Z</option>
+                        <option value="za">Z - A</option>
+
+                        <option value="cupos-desc">Mayor cupos</option>
+                        <option value="cupos-asc">Menor cupos</option>
+
+                        <option value="precio-desc">Mayor precio</option>
+                        <option value="precio-asc">Menor precio</option>
+                    </select>
+
+                </div>
+
+            </data>
+
+        </div>
+
+    </section>
+</body>
+</html>

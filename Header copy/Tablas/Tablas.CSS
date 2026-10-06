@@ -1,0 +1,165 @@
+@import url(../../Main.CSS);
+
+/* ===== Contenedor principal ===== */
+.services-card {
+  background: var(--color-white);
+  border-radius: 1rem;
+  padding: 1.75rem 2rem;
+  width: 100%;
+  max-width: 1100px;
+  box-shadow: var(--shadow);
+}
+
+/* ===== Cabecera ===== */
+.services-card__header {
+  display: grid;
+  grid-template-columns: 2.6fr 1fr 1.1fr 1.2fr 1.2fr 60px;
+  padding-bottom: 1.1rem;
+}
+
+.services-card__header span {
+    font-family: "Mona Sans", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+/* ===== Filas ===== */
+.row {
+  display: grid;
+  grid-template-columns: 2.6fr 1fr 1.1fr 1.2fr 1.2fr 60px;
+  align-items: center;
+  padding: 1.05rem 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.row:first-of-type {
+  border-top: 1px solid var(--color-border);
+}
+
+/* ----- Servicio ----- */
+.service {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.service__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.service__icon .bx {
+  font-size: 1.35rem;
+  color: var(--color-white);
+}
+
+.service__icon--blue   { background: var(--category-cloud-20);}
+.service__icon--green  { background: var(--category-cloud-20);}
+.service__icon--pink   { background: var(--category-cloud-20);}
+
+.service__name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-dark);
+  line-height: 1.2;
+}
+
+.service__meta {
+  font-size: 0.74rem;
+  color: #9aa3b2;
+  margin-top: 0.15rem;
+}
+
+/* ----- Categoría ----- */
+.tag {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+}
+
+.tag--cloud   { color: var(--category-cloud);  background: var(--category-cloud-10); }
+.tag--backend { color: var(--category-backend); background: var(--category-backend-10); }
+
+/* ----- Estado ----- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status .bx {
+  font-size: 1.05rem;
+}
+
+.status--active   { color: var(--status-active); }
+.status--progress { color: var(--status-in-progress); }
+.status--done     { color: #b6bdcb; }
+
+/* ----- Próxima sesión ----- */
+.next-session {
+  font-size: 0.85rem;
+  color: var(--color-dark);
+  font-weight: 500;
+}
+
+/* ----- Progreso ----- */
+.progress__label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: #9aa3b2;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.progress__track {
+  height: 5px;
+  width: 90%;
+  background: #eef1f5;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.progress__bar--green   { background: var(--status-active); }
+.progress__bar--orange  { background: var(--status-in-progress); }
+.progress__bar--blue    { background: var(--color-primary); }
+
+/* ----- Acción ----- */
+.action {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-10);
+  color: var(--color-primary);
+  transition: background 0.2s ease;
+}
+
+.action:hover {
+  background: var(--color-primary-20);
+}
+
+.action .bx {
+  font-size: 1.15rem;
+}

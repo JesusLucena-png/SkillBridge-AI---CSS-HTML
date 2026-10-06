@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillBridge AI - Header y Footer</title>
+
+    <!-- Fuente -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+    </style>
+</head>
+<body>
+
+<style>
+/* ============================================================
+   VARIABLES (Main.CSS embebido para que esta página funcione sola)
+   ============================================================ */
+:root {
+    --color-white: 255 255 255;
+    --color-background: 15 23 42;
+    --color-primary: 40 97 216;
+    --color-dark: 26 26 26;
+    --color-text: 95 95 95;
+    --color-border: 223 223 223;
+
+    --status-active: 16 185 129;
+    --status-in-progress: 255 169 23;
+    --status-cancelled: 218 35 35;
+
+    --header-height: clamp(60px, 8vh, 80px);
+    --color-primary-10: rgb(var(--color-primary) / 10%);
+    --color-primary-20: rgb(var(--color-primary) / 20%);
+
+    --shadow: 0 0 8px rgb(95 95 95);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    background-color: #f7f9fd;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: rgb(var(--color-dark));
+}
+
+
+/* ============================================================
+   ZONA DEMO (solo para rellenar entre header y footer)
+   ============================================================ */
+.demo-content {
+    max-width: 900px;
+
+    margin: 0 auto;
+    padding: calc(var(--header-height) + 50px) 24px 60px;
+}
+
+.demo-content h1 {
+    margin-bottom: 10px;
+
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.demo-content p {
+    color: rgb(var(--color-text));
+    line-height: 1.6;
+}
+
+/* Botones demo de sesión (para probar is-auth) */
+.demo-session {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    z-index: 2000;
+
+    display: flex;
+    gap: 10px;
+}
+
+.demo-session button {
+    padding: 8px 14px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: rgb(var(--color-dark));
+    color: rgb(var(--color-white));
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+}
+
+.demo-session button:hover {
+    opacity: 1;
+}
+
+
+/* ############################################################
+   HEADER GLOBAL
+   ############################################################ */
+
+/* ============ 1. HEADER BASE ============ */
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+
+    display: flex;
+
+    width: 100%;
+    height: var(--header-height);
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 30px;
+
+    background-color: rgb(var(--color-white));
+    border-bottom: 1px solid rgb(var(--color-border));
+
+    box-shadow: var(--shadow);
+}
+
+
+/* ============ 2. LOGOS ============ */
+.header__logo {
+    overflow: hidden;
+    display: flex;
+
+    height: 60%;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+.header__logo--full {
+    width: 200px;
+}
+
+.header__logo--icon {
+    display: none;
+    width: 45px;
+}
+
+.header__logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+/* ============ 3. NAVEGACIÓN ============ */
+.header__nav {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.header__menu {
+    display: flex;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+
+    font-family: "Mona Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.header__menu-item {
+    display: flex;
+
+    width: 120px;
+
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.header__menu-item i {
+    font-size: 1.2rem;
+    color: rgb(var(--color-primary));
+}
+
+.header__menu-item a {
+    position: relative;
+
+    text-decoration: none;
+    color: rgb(var(--color-text));
+
+    transition: color 0.25s ease;
+}
+
+.header__menu-item a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+
+    width: 100%;
+    height: 2px;
+
+    background-color: rgb(var(--color-primary));
+    border-radius: 2px;
+
+    transform: scaleX(0);
+    transform-origin: left;
+
+    transition: transform 0.25s ease;
+}
+
+.header__menu-item a:hover {
+    color: rgb(var(--color-primary));
+}
+
+.header__menu-item a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Items solo para logueados */
+.header__menu-item--auth {
+    display: none;
+}
+
+body.is-auth .header__menu-item--auth {
+    display: flex;
+}
+
+
+/* ============ 4. ACCIONES INVITADO ============ */
+.header__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+body.is-auth .header__actions {
+    display: none;
+}
+
+.header__login {
+    text-decoration: none;
+
+    font-family: "Mona Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+
+    color: rgb(var(--color-primary));
+
+    transition: opacity 0.25s ease;
+}
+
+.header__login:hover {
+    opacity: 0.75;
+}
+
+.header__register-btn {
+    border: none;
+    outline: none;
+
+    padding: 10px 20px;
+
+    border-radius: 25px;
+
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-white));
+
+    font-family: "Mona Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 0 8px var(--color-primary-20);
+
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.header__register-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.92;
+}
+
+
+/* ============ 5. ACCIONES LOGEADO ============ */
+#actions-login {
+    display: none;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+body.is-auth #actions-login {
+    display: flex;
+}
+
+.header__actions-login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.header__actions-login-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 80px;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: right;
+}
+
+.header__actions-login-name {
+    max-width: 160px;
+    overflow: hidden;
+
+    color: rgb(var(--color-text));
+
+    font-family: "Mona Sans", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    text-transform: capitalize;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.header__actions-login-role {
+    color: rgb(var(--color-primary));
+
+    font-family: "Mona Sans", sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.header__actions-login-icon {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+    border: 1px solid rgb(var(--color-border));
+    background-color: var(--color-primary-10);
+}
+
+.header__actions-login-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.header__actions-login-logout {
+    display: flex;
+    height: 100%;
+    padding: 0 5px;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: transparent;
+
+    color: rgb(var(--color-primary));
+    font-size: 1.5rem;
+
+    cursor: pointer;
+
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.header__actions-login-logout:hover {
+    color: rgb(var(--status-cancelled));
+    transform: translateX(2px);
+}
+
+
+/* ============ 6. HAMBURGUESA ============ */
+.header__menu-toggle {
+    display: none;
+    height: 100%;
+    padding: 0 10px;
+
+    border: none;
+    background: transparent;
+
+    align-items: center;
+    justify-content: center;
+
+    color: rgb(var(--color-primary));
+    font-size: 1.5rem;
+
+    cursor: pointer;
+}
+
+
+/* ============ 7. MENÚ LATERAL ============ */
+.header__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+
+    background-color: rgb(var(--color-background) / 60%);
+    backdrop-filter: blur(2px);
+
+    animation: overlayIn 0.3s ease both;
+}
+
+@keyframes overlayIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.header__overlay[hidden] {
+    display: none;
+}
+
+.header__drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1002;
+
+    display: flex;
+    flex-direction: column;
+
+    width: min(320px, 85vw);
+    height: 100dvh;
+
+    padding: 20px;
+
+    gap: 25px;
+
+    background-color: rgb(var(--color-white));
+    box-shadow: -4px 0 20px rgb(var(--color-background) / 15%);
+
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.header__drawer.is-open {
+    transform: translateX(0);
+}
+
+.header__drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgb(var(--color-border));
+}
+
+.header__drawer-header .header__logo--icon {
+    display: flex;
+}
+
+.header__drawer-close {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+
+    color: rgb(var(--color-text));
+    font-size: 1.6rem;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.header__drawer-close:hover {
+    background-color: var(--color-primary-10);
+    color: rgb(var(--color-primary));
+}
+
+.header__drawer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.header__drawer-link {
+    display: flex;
+    padding: 13px 14px;
+    gap: 12px;
+    align-items: center;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-family: "Mona Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+
+    color: rgb(var(--color-text));
+
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.header__drawer-link i {
+    font-size: 1.2rem;
+    color: rgb(var(--color-primary));
+}
+
+.header__drawer-link:hover {
+    background-color: var(--color-primary-10);
+    color: rgb(var(--color-primary));
+}
+
+.header__drawer-link--auth {
+    display: none;
+}
+
+body.is-auth .header__drawer-link--auth {
+    display: flex;
+}
+
+.header__drawer-actions {
+    margin-top: auto;
+    padding-top: 20px;
+    gap: 15px;
+    border-top: 1px solid rgb(var(--color-border));
+}
+
+.header__drawer-guest {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__drawer-auth {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+}
+
+body.is-auth .header__drawer-guest {
+    display: none;
+}
+
+body.is-auth .header__drawer-auth {
+    display: flex;
+}
+
+.header__drawer-auth .header__actions-login-info {
+    align-items: flex-start;
+    text-align: left;
+}
+
+
+/* ############################################################
+   FOOTER GLOBAL
+   ############################################################ */
+
+#footer {
+    width: 100%;
+
+    padding: 60px 30px 30px;
+
+    background-color: rgb(var(--color-background));
+
+    font-family: "Mona Sans", sans-serif;
+    color: rgb(var(--color-white));
+}
+
+.footer__container {
+    display: grid;
+
+    grid-template-columns: 2fr 1fr 1fr;
+
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+    padding-bottom: 40px;
+
+    gap: 50px;
+}
+
+.footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.footer__logo {
+    overflow: hidden;
+
+    display: flex;
+
+    width: 190px;
+    height: 40px;
+
+    align-items: center;
+    justify-content: center;
+}
+
+/* Logo en blanco para fondo oscuro */
+.footer__logo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    filter: brightness(0) invert(1);
+}
+
+.footer__description {
+    max-width: 340px;
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6;
+
+    color: rgb(var(--color-white) / 60%);
+}
+
+.footer__column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.footer__column-title {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+}
+
+.footer__links {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0;
+    padding: 0;
+
+    gap: 10px;
+
+    list-style: none;
+}
+
+.footer__links a {
+    font-size: 13px;
+    font-weight: 500;
+
+    color: rgb(var(--color-white) / 55%);
+    text-decoration: none;
+
+    transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.footer__links a:hover {
+    color: rgb(var(--color-white));
+    padding-left: 4px;
+}
+
+.footer__bottom {
+    display: flex;
+
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding-top: 25px;
+
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+
+    border-top: 1px solid rgb(var(--color-white) / 12%);
+}
+
+.footer__copyright {
+    font-size: 12px;
+    font-weight: 400;
+
+    color: rgb(var(--color-white) / 45%);
+}
+
+.footer__social {
+    display: flex;
+    gap: 10px;
+}
+
+.footer__social-link {
+    display: flex;
+
+    width: 36px;
+    height: 36px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background-color: rgb(var(--color-white) / 8%);
+
+    font-size: 18px;
+    color: rgb(var(--color-white) / 70%);
+    text-decoration: none;
+
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.footer__social-link:hover {
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-white));
+
+    transform: translateY(-2px);
+}
+
+
+/* ############################################################
+   RESPONSIVE
+   ############################################################ */
+
+@media (max-width: 900px) {
+    .header__nav {
+        display: none;
+    }
+
+    .header__menu-toggle {
+        display: flex;
+    }
+
+    .header__logo--full {
+        display: none;
+    }
+
+    .header__logo--icon {
+        display: flex;
+    }
+
+    #footer {
+        padding: 50px 24px 24px;
+    }
+
+    .footer__container {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+
+    .footer__brand {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer__container {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .footer__bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 430px) {
+    #header {
+        padding: 0 14px;
+    }
+
+    .header__logo--icon {
+        width: 38px;
+    }
+
+    .header__actions,
+    #actions-login {
+        display: none !important;
+    }
+}
+</style>
+
+<!-- Boxicons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+<link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+<link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+
+
+<!-- ############################################################
+     HEADER GLOBAL
+############################################################ -->
+<header id="header" class="header">
+
+    <div class="header__logo header__logo--full">
+        <img class="header__logo-img" src="../../Img/Group 22.svg" alt="SkillBridge AI">
+    </div>
+
+    <div class="header__logo header__logo--icon">
+        <img class="header__logo-img" src="../../Img/Vector.jpg" alt="SkillBridge AI">
+    </div>
+
+
+    <nav id="nav" class="header__nav">
+        <ul class="header__menu">
+            <li class="header__menu-item">
+                <a href="#inicio">Inicio</a>
+            </li>
+            <li class="header__menu-item">
+                <a href="#servicios">Servicios</a>
+            </li>
+            <li class="header__menu-item header__menu-item--auth">
+                <a href="#registros">Registros</a>
+            </li>
+            <li class="header__menu-item header__menu-item--auth">
+                <i class="bx bx-sparkles-alt"></i>
+                <a href="#asistente">Asistente IA</a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <!-- Invitado -->
+    <div class="header__actions">
+        <a href="#iniciar" class="header__login">Iniciar</a>
+        <button class="header__register-btn" type="button">Registrarse</button>
+    </div>
+
+
+    <!-- Logueado -->
+    <div id="actions-login" class="header__actions-login">
+        <div class="header__actions-login-container">
+            <div class="header__actions-login-info">
+                <span class="header__actions-login-name">Admin User</span>
+                <span class="header__actions-login-role">Developer Admin</span>
+            </div>
+            <div class="header__actions-login-icon">
+                <img src="../Img/Group 22.svg" alt="Foto de perfil">
+            </div>
+        </div>
+        <button class="header__actions-login-logout" type="button" aria-label="Cerrar sesión">
+            <i class="bx bx-arrow-out-right-square-half"></i>
+        </button>
+    </div>
+
+
+    <!-- Hamburguesa -->
+    <button class="header__menu-toggle" id="menu-toggle" type="button"
+            aria-label="Abrir menú" aria-expanded="false">
+        <i class="bx bx-menu"></i>
+    </button>
+
+</header>
+
+
+<!-- Overlay + menú lateral -->
+<div id="drawer-overlay" class="header__overlay" hidden></div>
+
+<aside id="drawer" class="header__drawer" aria-label="Menú de navegación">
+
+    <div class="header__drawer-header">
+        <div class="header__logo header__logo--icon">
+            <img class="header__logo-img" src="../../Img/Vector.jpg" alt="SkillBridge AI">
+        </div>
+        <button id="drawer-close" class="header__drawer-close" type="button" aria-label="Cerrar menú">
+            <i class="bx bx-x"></i>
+        </button>
+    </div>
+
+    <nav class="header__drawer-nav">
+        <a href="#inicio" class="header__drawer-link"><i class="bx bx-home"></i> Inicio</a>
+        <a href="#servicios" class="header__drawer-link"><i class="bx bx-briefcase"></i> Servicios</a>
+        <a href="#registros" class="header__drawer-link header__drawer-link--auth"><i class="bx bx-folder"></i> Registros</a>
+        <a href="#asistente" class="header__drawer-link header__drawer-link--auth"><i class="bx bx-sparkles-alt"></i> Asistente IA</a>
+    </nav>
+
+    <div class="header__drawer-actions header__drawer-guest">
+        <a href="#iniciar" class="header__login">Iniciar</a>
+        <button class="header__register-btn" type="button">Registrarse</button>
+    </div>
+
+    <div class="header__drawer-actions header__drawer-auth">
+        <div class="header__actions-login-info">
+            <span class="header__actions-login-name">Admin User</span>
+            <span class="header__actions-login-role">Developer Admin</span>
+        </div>
+        <button class="header__actions-login-logout" type="button" aria-label="Cerrar sesión">
+            <i class="bx bx-arrow-out-right-square-half"></i>
+        </button>
+    </div>
+
+</aside>
+
+
+<!-- ############################################################
+     CONTENIDO DEMO (reemplazar con tus páginas)
+############################################################ -->
+<main class="demo-content">
+    <h1>Contenido de la página</h1>
+    <p>Aquí va el contenido de cada vista. El header es fijo y el footer siempre va al final.</p>
+</main>
+
+
+<!-- ############################################################
+     FOOTER GLOBAL
+############################################################ -->
+<footer id="footer" class="footer">
+
+    <div class="footer__container">
+
+        <div class="footer__brand">
+            <div class="footer__logo">
+                <img src="../../Img/Group 23.jpg" alt="SkillBridge AI">
+            </div>
+            <p class="footer__description">
+                Potenciando el desarrollo de software moderno con
+                infraestructuras sólidas y escalables.
+            </p>
+        </div>
+
+        <nav class="footer__column">
+            <h3 class="footer__column-title">Navegación</h3>
+            <ul class="footer__links">
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#documentacion">Documentación</a></li>
+            </ul>
+        </nav>
+
+        <nav class="footer__column">
+            <h3 class="footer__column-title">Legal</h3>
+            <ul class="footer__links">
+                <li><a href="#terminos">Términos</a></li>
+                <li><a href="#privacidad">Privacidad</a></li>
+                <li><a href="#seguridad">Seguridad</a></li>
+            </ul>
+        </nav>
+
+    </div>
+
+    <div class="footer__bottom">
+        <p class="footer__copyright">
+            © 2024 SkillBridge AI. Proyecto Integrador. Todos los derechos reservados.
+        </p>
+        <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="GitHub">
+                <i class="bx bxl-github"></i>
+            </a>
+            <a href="#" class="footer__social-link" aria-label="LinkedIn">
+                <i class="bx bxl-linkedin-square"></i>
+            </a>
+        </div>
+    </div>
+
+</footer>
+
+
+<!-- Botones demo (quitar cuando conectes el backend) -->
+<div class="demo-session">
+    <button id="demo-login" type="button">Simular login</button>
+    <button id="demo-logout" type="button">Simular logout</button>
+</div>
+
+
+<script>
+    /* ============================================================
+       SESIÓN (is-auth en body)
+    ============================================================ */
+    function setSession(logged) {
+        document.body.classList.toggle('is-auth', logged);
+    }
+
+    document.getElementById('demo-login').addEventListener('click', () => setSession(true));
+    document.getElementById('demo-logout').addEventListener('click', () => setSession(false));
+
+    document.querySelectorAll('.header__actions-login-logout').forEach(btn => {
+        btn.addEventListener('click', () => setSession(false));
+    });
+
+
+    /* ============================================================
+       MENÚ LATERAL (DRAWER)
+    ============================================================ */
+    const drawer  = document.getElementById('drawer');
+    const overlay = document.getElementById('drawer-overlay');
+    const toggle  = document.getElementById('menu-toggle');
+    const icon    = toggle.querySelector('i');
+
+    function openDrawer() {
+        drawer.classList.add('is-open');
+        overlay.hidden = false;
+        icon.className = 'bx bx-x';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+        drawer.classList.remove('is-open');
+        overlay.hidden = true;
+        icon.className = 'bx bx-menu';
+        document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', () =>
+        drawer.classList.contains('is-open') ? closeDrawer() : openDrawer());
+
+    document.getElementById('drawer-close').addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeDrawer();
+    });
+
+    drawer.querySelectorAll('a').forEach(link =>
+        link.addEventListener('click', closeDrawer));
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) closeDrawer();
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+@import url(../../Main.CSS);
+
+/* =========================
+   SEARCH SECTION
+========================= */
+
+.search-section {
+    display: flex;
+
+    width: 100vw;
+    height: 150px;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--white);
+
+    box-sizing: border-box;
+}
+
+
+/* Contenedor de los controles */
+
+.search-section__controls {
+    display: flex;
+
+    width: 90%;
+    max-width: 900px;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 20px;
+    padding: 20px 40px;
+
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+
+/* =========================
+   SEARCH BOX
+========================= */
+
+.search-box {
+    display: flex;
+
+    width: 100%;
+    height: 45px;
+
+    align-items: center;
+
+    padding: 0 16px;
+    gap: 10px;
+
+    background-color: rgb(240, 240, 240);
+    border: 1px solid rgb(240, 240, 240);
+
+    color: var(--color-text);
+
+    border-radius: 10px;
+
+    transition:
+    background-color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        color 0.25s ease;
+
+    user-select: none;
+
+}
+
+
+/* Icono */
+
+.search-box__icon {
+    line-height: 0;
+    font-size: 1.2rem;
+    color: var(--color-text);
+}
+
+/* Input */
+
+.search-box__input {
+    width: 100%;
+    height: 100%;
+
+    padding: 0;
+
+    border: none;
+    outline: none;
+
+    background-color: transparent;
+
+    color: var(--text);
+
+    font-family: "Mona Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.search-box__input::placeholder {
+    color: var(--text);
+
+    opacity: 0.65;
+}
+
+
+/* Cuando el buscador está seleccionado */
+
+.search-box:focus-within{
+    background-color: var(--color-white);
+    border: 1px solid var(--color-primary);
+    box-shadow: 0 0 8px var(--color-primary-20);
+}
+
+.search-box:focus-within .search-box__icon {
+    color: var(--color-primary);
+}
+
+.search-box:focus-within .search-box__input {
+    color: var(--color-primary);
+}
+
+
+/* =========================
+   SELECT
+========================= */
+
+.select-box {
+    position: relative;
+
+    width: auto;
+    min-width: auto;
+    height: 45px;
+}
+
+
+/* Select */
+
+.service-select {
+    width: 100%;
+    height: 100%;
+
+    padding: 0 40px 0 16px;
+
+    box-sizing: border-box;
+
+    background-color: rgb(240, 240, 240);
+    border: 1px solid rgb(240, 240, 240);
+
+    border-radius: 10px;
+
+    outline: none;
+
+    color: var(--color-text);
+
+    font-family: "Mona Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+
+    cursor: pointer;
+
+    transition:
+    background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.25s ease,
+        box-shadow 0.2s ease;
+
+    user-select: none;
+}
+
+
+/* Select seleccionado */
+
+.service-select:focus {
+    border-color: var(--color-primary);
+
+    color: var(--color-primary);
+
+    background-color: var(--color-white);
+
+    box-shadow: 0 0 8px var(--color-primary-20);
+}
+
+.search-box__results{
+    display: flex; 
+    width: 100%;
+
+    gap: 10px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .search-section {
+        height: 500px;
+    }
+
+    .search-section__controls {
+        flex-direction: column;
+
+        gap: 14px;
+
+        padding:  20px;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .select-box {
+        width: 100%;
+        min-width: 0;
+    }
+}

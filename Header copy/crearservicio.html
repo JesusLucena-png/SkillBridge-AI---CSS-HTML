@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Nuevo Servicio - SkillBridge AI</title>
+
+    <!-- Fuente del login -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+<style>
+/* ============================================================
+   VARIABLES (mismas referencias del Main.CSS / login)
+   ============================================================ */
+:root {
+    --color-white: 255 255 255;
+    --color-background: 15 23 42;
+    --color-primary: 40 97 216;
+    --color-dark: 26 26 26;
+    --color-text: 95 95 95;
+    --color-border: 223 223 223;
+
+    --status-active: 16 185 129;
+    --status-in-progress: 255 169 23;
+    --status-cancelled: 218 35 35;
+}
+
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    padding: 60px 20px 80px;
+
+    background-color: #f7f9fd;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: rgb(var(--color-dark));
+}
+
+
+/* ============================================================
+   SECCIÓN 1: INDICADOR DE PASOS
+   ============================================================ */
+.steps-section {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 640px;
+
+    margin: 0 auto 30px;
+
+    align-items: center;
+
+    gap: 35px;
+}
+
+/* Título principal */
+.steps-section__header {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 8px;
+
+    text-align: center;
+}
+
+.steps-section__title {
+    font-size: clamp(24px, 3vw, 30px);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.steps-section__subtitle {
+    font-size: 14px;
+    font-weight: 500;
+
+    color: rgb(var(--color-text));
+}
+
+/* Stepper */
+.stepper {
+    display: flex;
+
+    width: 100%;
+    max-width: 520px;
+
+    align-items: flex-start;
+}
+
+.stepper__step {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+/* Círculo numerado */
+.stepper__circle {
+    display: flex;
+
+    width: 36px;
+    height: 36px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    border: 2px solid rgb(var(--color-border));
+
+    background-color: rgb(var(--color-white));
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: rgb(var(--color-text));
+
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+}
+
+/* Línea conectora */
+.stepper__line {
+    flex: 1;
+    height: 2px;
+
+    margin: 17px 10px 0; /* alineada al centro del círculo */
+
+    background-color: rgb(var(--color-border));
+    border-radius: 2px;
+
+    transition: background-color 0.3s ease;
+}
+
+/* Etiqueta debajo del círculo */
+.stepper__label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+
+    color: rgb(var(--color-text));
+
+    transition: color 0.3s ease;
+}
+
+/* ---------- Estados del stepper ---------- */
+
+/* Paso actual */
+.stepper__step.is-active .stepper__circle {
+    background-color: rgb(var(--color-primary));
+    border-color: rgb(var(--color-primary));
+    color: rgb(var(--color-white));
+
+    box-shadow: 0 0 0 5px rgb(var(--color-primary) / 15%);
+}
+
+.stepper__step.is-active .stepper__label {
+    color: rgb(var(--color-primary));
+}
+
+/* Paso completado */
+.stepper__step.is-complete .stepper__circle {
+    background-color: rgb(var(--color-primary));
+    border-color: rgb(var(--color-primary));
+    color: rgb(var(--color-white));
+}
+
+.stepper__line.is-complete {
+    background-color: rgb(var(--color-primary));
+}
+
+
+/* ============================================================
+   SECCIÓN 2: FORMULARIO
+   ============================================================ */
+.form-section {
+    width: 100%;
+    max-width: 640px;
+
+    margin: 0 auto;
+    padding: 40px;
+
+    background-color: rgb(var(--color-white));
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 24px;
+
+    box-shadow: 0 8px 30px rgb(var(--color-background) / 6%);
+}
+
+/* Cabecera de la tarjeta del formulario */
+.form-section__card-header {
+    display: flex;
+
+    margin-bottom: 30px;
+
+    gap: 12px;
+    align-items: center;
+}
+
+.form-section__card-icon {
+    display: flex;
+
+    width: 42px;
+    height: 42px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background-color: rgb(var(--color-primary) / 10%);
+
+    font-size: 20px;
+    color: rgb(var(--color-primary));
+}
+
+.form-section__card-title {
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+}
+
+/* Cada vista (paso) del formulario */
+.form-step {
+    display: none;
+    flex-direction: column;
+
+    gap: 20px;
+
+    animation: stepIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.form-step.is-active {
+    display: flex;
+}
+
+@keyframes stepIn {
+    from {
+        opacity: 0;
+        transform: translateX(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Grupo campo + label */
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    color: rgb(var(--color-text));
+}
+
+/* Inputs (mismo estilo que el login) */
+.form-input {
+    width: 100%;
+    min-height: 52px;
+
+    padding: 14px 16px;
+
+    background-color: #f4f6fb;
+    border: 1px solid transparent;
+    border-radius: 14px;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    color: rgb(var(--color-dark));
+
+    outline: none;
+
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+textarea.form-input {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-input::placeholder {
+    color: rgb(var(--color-text) / 60%);
+}
+
+.form-input:focus {
+    background-color: rgb(var(--color-white));
+    border-color: rgb(var(--color-primary));
+    box-shadow: 0 0 0 4px rgb(var(--color-primary) / 12%);
+}
+
+/* Input de archivo (adjuntar imagen) */
+.form-file {
+    position: relative;
+
+    display: flex;
+
+    min-height: 90px;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    background-color: #f4f6fb;
+    border: 2px dashed rgb(var(--color-border));
+    border-radius: 14px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: rgb(var(--color-text));
+
+    cursor: pointer;
+
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form-file:hover {
+    border-color: rgb(var(--color-primary));
+    background-color: rgb(var(--color-primary) / 5%);
+}
+
+.form-file i {
+    font-size: 22px;
+    color: rgb(var(--color-primary));
+}
+
+.form-file input[type="file"] {
+    display: none; /* el label es el área clicable */
+}
+
+.form-file__preview {
+    display: none;
+
+    margin-top: 10px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: rgb(var(--status-active));
+}
+
+/* Lista dinámica (lista de servicios) */
+.form-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.form-list__row {
+    display: flex;
+
+    gap: 10px;
+    align-items: center;
+}
+
+.form-list__remove {
+    display: flex;
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 12px;
+
+    background-color: rgb(var(--status-cancelled) / 10%);
+    color: rgb(var(--status-cancelled));
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.form-list__remove:hover {
+    background-color: rgb(var(--status-cancelled) / 20%);
+}
+
+.form-list__add {
+    display: flex;
+
+    width: 100%;
+    min-height: 44px;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: 2px dashed rgb(var(--color-border));
+    border-radius: 14px;
+
+    background: transparent;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+
+    color: rgb(var(--color-primary));
+
+    cursor: pointer;
+
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form-list__add:hover {
+    border-color: rgb(var(--color-primary));
+    background-color: rgb(var(--color-primary) / 5%);
+}
+
+/* Pills de categoría (como en la imagen) */
+.form-tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.form-tag {
+    display: flex;
+
+    padding: 9px 16px;
+
+    gap: 8px;
+    align-items: center;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 25px;
+
+    background-color: rgb(var(--color-white));
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    color: rgb(var(--color-text));
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.form-tag__dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+}
+
+.form-tag.is-selected {
+    border-color: rgb(var(--color-primary));
+    background-color: rgb(var(--color-primary) / 10%);
+    color: rgb(var(--color-primary));
+
+    box-shadow: 0 0 0 3px rgb(var(--color-primary) / 10%);
+}
+
+/* Campo con icono (correo / contraseña / URL) */
+.form-field {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+}
+
+.form-field__icon {
+    position: absolute;
+    left: 16px;
+
+    font-size: 18px;
+    color: rgb(var(--color-text) / 70%);
+
+    pointer-events: none;
+}
+
+.form-field .form-input {
+    padding-left: 46px;
+}
+
+.form-field__toggle {
+    position: absolute;
+    right: 14px;
+
+    border: none;
+    background: transparent;
+
+    font-size: 18px;
+    color: rgb(var(--color-text) / 70%);
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.form-field__toggle:hover {
+    color: rgb(var(--color-dark));
+}
+
+/* Botones de navegación entre pasos */
+.form-nav {
+    display: flex;
+
+    margin-top: 10px;
+
+    gap: 12px;
+}
+
+.form-button {
+    width: 100%;
+    min-height: 52px;
+
+    border: none;
+    border-radius: 14px;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.1s ease;
+}
+
+.form-button:active {
+    transform: scale(0.98);
+}
+
+/* Primario (Continuar / Publicar) */
+.form-button--primary {
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-white));
+
+    box-shadow: 0 6px 16px rgb(var(--color-primary) / 35%);
+}
+
+.form-button--primary:hover {
+    background-color: rgb(35 84 190);
+}
+
+/* Secundario (Atrás) */
+.form-button--ghost {
+    background-color: transparent;
+    border: 1px solid rgb(var(--color-border));
+    color: rgb(var(--color-text));
+}
+
+.form-button--ghost:hover {
+    background-color: #f4f6fb;
+    color: rgb(var(--color-dark));
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 700px) {
+    body {
+        padding: 40px 14px 60px;
+    }
+
+    .form-section {
+        padding: 28px 22px;
+
+        border-radius: 20px;
+    }
+
+    .stepper__label {
+        font-size: 9px;
+        letter-spacing: 0.8px;
+    }
+
+    .stepper__line {
+        margin: 17px 6px 0;
+    }
+}
+</style>
+
+<!-- Boxicons (iconos) -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+<link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+
+
+<!-- ============================================================
+     SECCIÓN 1: INDICADOR DE POSICIÓN DEL FORMULARIO
+============================================================ -->
+<section class="steps-section">
+
+    <div class="steps-section__header">
+        <h1 class="steps-section__title">Crear Nuevo Servicio</h1>
+        <p class="steps-section__subtitle">Completa los pasos para publicar una nueva oferta tecnológica en el catálogo.</p>
+    </div>
+
+    <div class="stepper" id="stepper">
+        <!-- Paso 1 -->
+        <div class="stepper__step is-active" data-step="1">
+            <span class="stepper__circle">1</span>
+            <span class="stepper__label">Información</span>
+        </div>
+        <span class="stepper__line" data-line="1"></span>
+
+        <!-- Paso 2 -->
+        <div class="stepper__step" data-step="2">
+            <span class="stepper__circle">2</span>
+            <span class="stepper__label">Técnico</span>
+        </div>
+        <span class="stepper__line" data-line="2"></span>
+
+        <!-- Paso 3 -->
+        <div class="stepper__step" data-step="3">
+            <span class="stepper__circle">3</span>
+            <span class="stepper__label">IA Integración</span>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     SECCIÓN 2: FORMULARIO (3 pasos)
+============================================================ -->
+<section class="form-section">
+
+    <div class="form-section__card-header">
+        <div class="form-section__card-icon">
+            <i class="bx bx-file"></i>
+        </div>
+        <h2 class="form-section__card-title" id="card-title">Información General</h2>
+    </div>
+
+
+    <!-- ========== PASO 1: INFORMACIÓN GENERAL ========== -->
+    <form class="form-step is-active" data-step="1" novalidate>
+
+        <div class="form-group">
+            <label class="form-label" for="service-name">Nombre del servicio</label>
+            <input class="form-input" id="service-name" type="text" placeholder="Ej. Diseño de Arquitectura Cloud con Spring Boot">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="service-details">Detalles del servicio</label>
+            <textarea class="form-input" id="service-details" placeholder="Describe en qué consiste el servicio, su alcance y objetivos..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Lista de servicios</label>
+            <div class="form-list" id="service-list">
+                <div class="form-list__row">
+                    <input class="form-input" type="text" placeholder="Ej. Auditoría de infraestructura actual">
+                    <button type="button" class="form-list__remove" aria-label="Eliminar campo">&times;</button>
+                </div>
+            </div>
+            <button type="button" class="form-list__add" id="add-service">
+                <i class="bx bx-plus"></i> Agregar otro servicio
+            </button>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="service-requirements">Requisitos</label>
+            <textarea class="form-input" id="service-requirements" placeholder="Conocimientos previos, herramientas o accesos necesarios..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="service-learning">Criterios de aprendizaje</label>
+            <textarea class="form-input" id="service-learning" placeholder="Qué será capaz de hacer el cliente al finalizar..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="service-image">Adjuntar imagen</label>
+            <label class="form-file" for="service-image">
+                <i class="bx bx-cloud-upload"></i>
+                <span>Haz clic para subir una imagen del servicio</span>
+            </label>
+            <input id="service-image" type="file" accept="image/*" hidden>
+            <span class="form-file__preview" id="file-preview"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Categoría / Tag</label>
+            <div class="form-tags" id="tags">
+                <button type="button" class="form-tag is-selected"><span class="form-tag__dot" style="background:#14a5e8"></span>Cloud</button>
+                <button type="button" class="form-tag"><span class="form-tag__dot" style="background:#10b981"></span>Backend</button>
+                <button type="button" class="form-tag"><span class="form-tag__dot" style="background:#f59e0b"></span>Frontend</button>
+                <button type="button" class="form-tag"><span class="form-tag__dot" style="background:#e83e8c"></span>IA</button>
+                <button type="button" class="form-tag"><span class="form-tag__dot" style="background:#f97316"></span>DevOps</button>
+            </div>
+        </div>
+
+        <div class="form-nav">
+            <button type="button" class="form-button form-button--primary" data-next>Continuar</button>
+        </div>
+
+    </form>
+
+
+    <!-- ========== PASO 2: TÉCNICO ========== -->
+    <form class="form-step" data-step="2" novalidate>
+
+        <div class="form-group">
+            <label class="form-label" for="service-capacity">Capacidad</label>
+            <input class="form-input" id="service-capacity" type="number" min="1" placeholder="Ej. 20 cupos disponibles">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="service-email">Gmail</label>
+            <div class="form-field">
+                <i class="bx bx-envelope form-field__icon"></i>
+                <input class="form-input" id="service-email" type="email" placeholder="usuario@gmail.com">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="service-password">Contraseña</label>
+            <div class="form-field">
+                <i class="bx bx-lock form-field__icon"></i>
+                <input class="form-input" id="service-password" type="password" placeholder="••••••••">
+                <button type="button" class="form-field__toggle toggle-password" aria-label="Mostrar contraseña">
+                    <i class="bx bx-show"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="service-url">URL del servicio</label>
+            <div class="form-field">
+                <i class="bx bx-link form-field__icon"></i>
+                <input class="form-input" id="service-url" type="url" placeholder="https://ejemplo.com/servicio">
+            </div>
+        </div>
+
+        <div class="form-nav">
+            <button type="button" class="form-button form-button--ghost" data-prev>Atrás</button>
+            <button type="button" class="form-button form-button--primary" data-next>Continuar</button>
+        </div>
+
+    </form>
+
+
+    <!-- ========== PASO 3: IA INTEGRACIÓN ========== -->
+    <form class="form-step" data-step="3" novalidate>
+
+        <div class="form-group">
+            <label class="form-label" for="ai-prompt">Prompt del asistente IA</label>
+            <textarea class="form-input" id="ai-prompt" placeholder="Instrucciones que seguirá el asistente de IA para este servicio..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="ai-model">Modelo de IA</label>
+            <input class="form-input" id="ai-model" type="text" placeholder="Ej. GPT-4, Claude, Gemini...">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="ai-notes">Notas de integración</label>
+            <textarea class="form-input" id="ai-notes" placeholder="Consideraciones técnicas para la integración con la plataforma..."></textarea>
+        </div>
+
+        <div class="form-nav">
+            <button type="button" class="form-button form-button--ghost" data-prev>Atrás</button>
+            <button type="button" class="form-button form-button--primary" id="publish-btn">Publicar Servicio</button>
+        </div>
+
+    </form>
+
+</section>
+
+
+<script>
+    /* ============================================================
+       NAVEGACIÓN ENTRE PASOS
+    ============================================================ */
+    const steps        = document.querySelectorAll('.form-step');
+    const stepperSteps = document.querySelectorAll('.stepper__step');
+    const stepperLines = document.querySelectorAll('.stepper__line');
+    const cardTitle    = document.getElementById('card-title');
+
+    const TITLES = {
+        1: 'Información General',
+        2: 'Detalles Técnicos',
+        3: 'Integración con IA'
+    };
+
+    let currentStep = 1;
+    const TOTAL_STEPS = steps.length;
+
+    function goToStep(step) {
+        if (step < 1 || step > TOTAL_STEPS) return;
+
+        currentStep = step;
+
+        // Cambiar vista del formulario
+        steps.forEach(s => {
+            s.classList.toggle('is-active', Number(s.dataset.step) === step);
+        });
+
+        // Actualizar indicador
+        stepperSteps.forEach(s => {
+            const n = Number(s.dataset.step);
+            s.classList.toggle('is-active',  n === step);
+            s.classList.toggle('is-complete', n < step);
+        });
+
+        // Líneas completadas
+        stepperLines.forEach(l => {
+            l.classList.toggle('is-complete', Number(l.dataset.line) < step);
+        });
+
+        // Título de la tarjeta
+        cardTitle.textContent = TITLES[step];
+    }
+
+    // Botones "Continuar"
+    document.querySelectorAll('[data-next]').forEach(btn => {
+        btn.addEventListener('click', () => goToStep(currentStep + 1));
+    });
+
+    // Botones "Atrás"
+    document.querySelectorAll('[data-prev]').forEach(btn => {
+        btn.addEventListener('click', () => goToStep(currentStep - 1));
+    });
+
+    // Botón "Publicar" (demo)
+    document.getElementById('publish-btn').addEventListener('click', () => {
+        alert('¡Servicio publicado exitosamente! (demo)');
+    });
+
+
+    /* ============================================================
+       LISTA DINÁMICA DE SERVICIOS
+    ============================================================ */
+    const serviceList = document.getElementById('service-list');
+
+    document.getElementById('add-service').addEventListener('click', () => {
+        const row = document.createElement('div');
+        row.className = 'form-list__row';
+        row.innerHTML = `
+            <input class="form-input" type="text" placeholder="Ej. Implementación de pipelines CI/CD">
+            <button type="button" class="form-list__remove" aria-label="Eliminar campo">&times;</button>
+        `;
+        serviceList.appendChild(row);
+        row.querySelector('input').focus();
+    });
+
+    // Eliminar fila (delegación de eventos)
+    serviceList.addEventListener('click', (e) => {
+        if (e.target.classList.contains('form-list__remove')) {
+            e.target.closest('.form-list__row').remove();
+        }
+    });
+
+
+    /* ============================================================
+       TOGGLE MOSTRAR/OCULTAR CONTRASEÑA (estilo login)
+    ============================================================ */
+    document.querySelectorAll('.toggle-password').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const input = btn.parentElement.querySelector('input');
+            const show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            btn.querySelector('i').className = show ? 'bx bx-hide' : 'bx bx-show';
+        });
+    });
+
+
+    /* ============================================================
+       PILLS DE CATEGORÍA (selección múltiple, como en la imagen)
+    ============================================================ */
+    document.getElementById('tags').addEventListener('click', (e) => {
+        const tag = e.target.closest('.form-tag');
+        if (tag) tag.classList.toggle('is-selected');
+    });
+
+
+    /* ============================================================
+       VISTA PREVIA DEL ARCHIVO ADJUNTO
+    ============================================================ */
+    document.getElementById('service-image').addEventListener('change', (e) => {
+        const preview = document.getElementById('file-preview');
+        if (e.target.files.length > 0) {
+            preview.textContent = 'Archivo seleccionado: ' + e.target.files[0].name;
+            preview.style.display = 'block';
+        } else {
+            preview.style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurar Horarios - SkillBridge AI</title>
+
+    <!-- Fuente -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+<style>
+/* ============================================================
+   VARIABLES (mismas referencias del Main.CSS / login)
+   ============================================================ */
+:root {
+    --color-white: 255 255 255;
+    --color-background: 15 23 42;
+    --color-primary: 40 97 216;
+    --color-dark: 26 26 26;
+    --color-text: 95 95 95;
+    --color-border: 223 223 223;
+
+    --status-active: 16 185 129;
+    --status-in-progress: 255 169 23;
+    --status-cancelled: 218 35 35;
+}
+
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    padding: 60px 20px 80px;
+
+    background-color: #f7f9fd;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: rgb(var(--color-dark));
+}
+
+
+/* ============================================================
+   ESTRUCTURA
+   ============================================================ */
+.schedule-section {
+    width: 100%;
+    max-width: 640px;
+
+    margin: 0 auto;
+}
+
+/* Cabecera */
+.schedule-section__header {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 30px;
+
+    align-items: center;
+
+    gap: 8px;
+
+    text-align: center;
+}
+
+.schedule-section__title {
+    font-size: clamp(24px, 3vw, 30px);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.schedule-section__subtitle {
+    font-size: 14px;
+    font-weight: 500;
+
+    color: rgb(var(--color-text));
+}
+
+/* Tarjeta del formulario */
+.schedule-card {
+    padding: 40px;
+
+    background-color: rgb(var(--color-white));
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 24px;
+
+    box-shadow: 0 8px 30px rgb(var(--color-background) / 6%);
+}
+
+/* Subtítulos dentro del formulario */
+.schedule-card__subtitle {
+    display: flex;
+
+    margin: 30px 0 18px;
+
+    gap: 10px;
+    align-items: center;
+
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+}
+
+.schedule-card__subtitle:first-of-type {
+    margin-top: 0;
+}
+
+.schedule-card__subtitle i {
+    font-size: 18px;
+    color: rgb(var(--color-primary));
+}
+
+.schedule-card__subtitle::after {
+    content: "";
+
+    flex: 1;
+    height: 1px;
+
+    background-color: rgb(var(--color-border));
+}
+
+
+/* ============================================================
+   CAMPOS (mismo estilo que el login)
+   ============================================================ */
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 20px;
+
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    color: rgb(var(--color-text));
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    min-height: 52px;
+
+    padding: 14px 16px;
+
+    background-color: #f4f6fb;
+    border: 1px solid transparent;
+    border-radius: 14px;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    color: rgb(var(--color-dark));
+
+    outline: none;
+
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input::placeholder {
+    color: rgb(var(--color-text) / 60%);
+}
+
+.form-input:focus,
+.form-select:focus {
+    background-color: rgb(var(--color-white));
+    border-color: rgb(var(--color-primary));
+    box-shadow: 0 0 0 4px rgb(var(--color-primary) / 12%);
+}
+
+textarea.form-input {
+    min-height: 90px;
+    resize: vertical;
+}
+
+/* Select con flecha personalizada */
+.form-select {
+    appearance: none;
+
+    padding-right: 44px;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%235f5f5f' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+
+    cursor: pointer;
+}
+
+/* Fila de 2 columnas */
+.form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 14px;
+}
+
+/* Campo con icono */
+.form-field {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+}
+
+.form-field__icon {
+    position: absolute;
+    left: 16px;
+
+    font-size: 18px;
+    color: rgb(var(--color-text) / 70%);
+
+    pointer-events: none;
+}
+
+.form-field .form-input {
+    padding-left: 46px;
+}
+
+
+/* ============================================================
+   CHIPS DE DÍAS (Lunes - Domingo)
+   ============================================================ */
+.days-chips {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.day-chip {
+    display: flex;
+
+    min-width: 52px;
+    padding: 11px 14px;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 14px;
+
+    background-color: rgb(var(--color-white));
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+
+    color: rgb(var(--color-text));
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.day-chip:hover {
+    border-color: rgb(var(--color-primary));
+}
+
+.day-chip.is-selected {
+    background-color: rgb(var(--color-primary));
+    border-color: rgb(var(--color-primary));
+    color: rgb(var(--color-white));
+
+    box-shadow: 0 4px 12px rgb(var(--color-primary) / 35%);
+}
+
+
+/* ============================================================
+   MODALIDAD (radio cards)
+   ============================================================ */
+.radio-cards {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+.radio-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 16px 12px;
+
+    gap: 8px;
+    align-items: center;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 16px;
+
+    background-color: rgb(var(--color-white));
+
+    font-size: 13px;
+    font-weight: 700;
+
+    color: rgb(var(--color-text));
+
+    cursor: pointer;
+
+    text-align: center;
+
+    transition: all 0.2s ease;
+}
+
+.radio-card i {
+    font-size: 22px;
+    color: rgb(var(--color-text) / 70%);
+}
+
+.radio-card input {
+    display: none;
+}
+
+.radio-card:hover {
+    border-color: rgb(var(--color-primary) / 50%);
+}
+
+.radio-card.is-selected {
+    border-color: rgb(var(--color-primary));
+    background-color: rgb(var(--color-primary) / 8%);
+    color: rgb(var(--color-primary));
+
+    box-shadow: 0 0 0 3px rgb(var(--color-primary) / 12%);
+}
+
+.radio-card.is-selected i {
+    color: rgb(var(--color-primary));
+}
+
+
+/* ============================================================
+   CHECKBOXES PERSONALIZADOS
+   ============================================================ */
+.check-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.check-item {
+    display: flex;
+
+    padding: 13px 16px;
+
+    gap: 12px;
+    align-items: center;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 14px;
+
+    background-color: rgb(var(--color-white));
+
+    font-size: 14px;
+    font-weight: 500;
+
+    color: rgb(var(--color-text));
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.check-item input {
+    display: none;
+}
+
+.check-item__box {
+    display: flex;
+
+    width: 20px;
+    height: 20px;
+
+    flex-shrink: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid rgb(var(--color-border));
+    border-radius: 6px;
+
+    background-color: rgb(var(--color-white));
+
+    color: transparent;
+    font-size: 13px;
+
+    transition: all 0.2s ease;
+}
+
+.check-item.is-checked {
+    border-color: rgb(var(--color-primary));
+    background-color: rgb(var(--color-primary) / 6%);
+    color: rgb(var(--color-dark));
+}
+
+.check-item.is-checked .check-item__box {
+    background-color: rgb(var(--color-primary));
+    border-color: rgb(var(--color-primary));
+    color: rgb(var(--color-white));
+}
+
+
+/* ============================================================
+   RANGE SLIDER
+   ============================================================ */
+.range-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.range-group__value {
+    align-self: flex-end;
+
+    padding: 6px 14px;
+
+    border-radius: 10px;
+
+    background-color: rgb(var(--color-primary) / 10%);
+
+    font-size: 14px;
+    font-weight: 800;
+
+    color: rgb(var(--color-primary));
+}
+
+.form-range {
+    width: 100%;
+    height: 6px;
+
+    border-radius: 6px;
+
+    appearance: none;
+
+    background-color: #e5e9f2;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+.form-range::-webkit-slider-thumb {
+    appearance: none;
+
+    width: 22px;
+    height: 22px;
+
+    border: 4px solid rgb(var(--color-white));
+    border-radius: 50%;
+
+    background-color: rgb(var(--color-primary));
+
+    box-shadow: 0 2px 8px rgb(var(--color-primary) / 50%);
+
+    cursor: grab;
+
+    transition: transform 0.15s ease;
+}
+
+.form-range::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+
+/* ============================================================
+   SWITCH (toggle sí/no)
+   ============================================================ */
+.switch-group {
+    display: flex;
+
+    padding: 15px 16px;
+
+    align-items: center;
+    justify-content: space-between;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 14px;
+
+    background-color: rgb(var(--color-white));
+}
+
+.switch-group__text {
+    font-size: 14px;
+    font-weight: 600;
+
+    color: rgb(var(--color-dark));
+}
+
+.switch-group__hint {
+    font-size: 12px;
+    font-weight: 500;
+
+    color: rgb(var(--color-text));
+}
+
+.form-switch {
+    position: relative;
+
+    width: 48px;
+    height: 27px;
+
+    flex-shrink: 0;
+}
+
+.form-switch input {
+    display: none;
+}
+
+.form-switch__track {
+    position: absolute;
+    inset: 0;
+
+    border-radius: 30px;
+
+    background-color: #d7dce6;
+
+    cursor: pointer;
+
+    transition: background-color 0.25s ease;
+}
+
+.form-switch__track::after {
+    content: "";
+
+    position: absolute;
+    top: 3px;
+    left: 3px;
+
+    width: 21px;
+    height: 21px;
+
+    border-radius: 50%;
+
+    background-color: rgb(var(--color-white));
+
+    box-shadow: 0 2px 5px rgb(var(--color-background) / 25%);
+
+    transition: transform 0.25s ease;
+}
+
+.form-switch input:checked + .form-switch__track {
+    background-color: rgb(var(--color-primary));
+}
+
+.form-switch input:checked + .form-switch__track::after {
+    transform: translateX(21px);
+}
+
+
+/* ============================================================
+   BOTÓN
+   ============================================================ */
+.form-button {
+    width: 100%;
+    min-height: 52px;
+
+    margin-top: 10px;
+
+    border: none;
+    border-radius: 14px;
+
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-white));
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 16px rgb(var(--color-primary) / 35%);
+
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.form-button:hover {
+    background-color: rgb(35 84 190);
+}
+
+.form-button:active {
+    transform: scale(0.98);
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 700px) {
+    body {
+        padding: 40px 14px 60px;
+    }
+
+    .schedule-card {
+        padding: 28px 22px;
+
+        border-radius: 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .radio-cards {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<!-- Boxicons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+<link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+
+
+<!-- ============================================================
+     FORMULARIO DE HORARIOS / DISPONIBILIDAD
+============================================================ -->
+<section class="schedule-section">
+
+    <div class="schedule-section__header">
+        <h1 class="schedule-section__title">Configurar Horarios</h1>
+        <p class="schedule-section__subtitle">Define la disponibilidad del servicio tipo tutoría.</p>
+    </div>
+
+    <div class="schedule-card">
+
+        <!-- ======= DÍAS Y HORAS ======= -->
+        <h2 class="schedule-card__subtitle">
+            <i class="bx bx-calendar"></i> Días y horario
+        </h2>
+
+        <!-- Días disponibles (chips) -->
+        <div class="form-group">
+            <label class="form-label">Días disponibles</label>
+            <div class="days-chips" id="days-chips">
+                <button type="button" class="day-chip" data-day="lunes">Lun</button>
+                <button type="button" class="day-chip" data-day="martes">Mar</button>
+                <button type="button" class="day-chip" data-day="miercoles">Mié</button>
+                <button type="button" class="day-chip" data-day="jueves">Jue</button>
+                <button type="button" class="day-chip" data-day="viernes">Vie</button>
+                <button type="button" class="day-chip" data-day="sabado">Sáb</button>
+                <button type="button" class="day-chip" data-day="domingo">Dom</button>
+            </div>
+        </div>
+
+        <!-- Rango de hora -->
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" for="hora-inicio">Hora de inicio</label>
+                <div class="form-field">
+                    <i class="bx bx-time form-field__icon"></i>
+                    <input class="form-input" id="hora-inicio" type="time" value="17:00">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="hora-fin">Hora de fin</label>
+                <div class="form-field">
+                    <i class="bx bx-time-five form-field__icon"></i>
+                    <input class="form-input" id="hora-fin" type="time" value="18:00">
+                </div>
+            </div>
+        </div>
+
+        <!-- Número de horas + sesiones -->
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" for="num-horas">Número de horas</label>
+                <input class="form-input" id="num-horas" type="number" min="1" placeholder="Ej. 10 horas">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="num-sesiones">Cantidad de sesiones</label>
+                <input class="form-input" id="num-sesiones" type="number" min="1" placeholder="Ej. 8 sesiones">
+            </div>
+        </div>
+
+        <!-- Duración por sesión -->
+        <div class="form-group">
+            <label class="form-label" for="duracion-sesion">Duración por sesión</label>
+            <select class="form-select" id="duracion-sesion">
+                <option value="">Selecciona la duración...</option>
+                <option value="30">30 minutos</option>
+                <option value="45">45 minutos</option>
+                <option value="60" selected>1 hora</option>
+                <option value="90">1 hora 30 minutos</option>
+                <option value="120">2 horas</option>
+            </select>
+        </div>
+
+        <!-- Fechas del período -->
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" for="fecha-inicio">Disponible desde</label>
+                <input class="form-input" id="fecha-inicio" type="date">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="fecha-fin">Disponible hasta</label>
+                <input class="form-input" id="fecha-fin" type="date">
+            </div>
+        </div>
+
+
+        <!-- ======= MODALIDAD Y CUPO ======= -->
+        <h2 class="schedule-card__subtitle">
+            <i class="bx bx-shape-square"></i> Modalidad y cupo
+        </h2>
+
+        <!-- Modalidad (radio cards) -->
+        <div class="form-group">
+            <label class="form-label">Modalidad</label>
+            <div class="radio-cards" id="modalidad">
+                <label class="radio-card is-selected">
+                    <input type="radio" name="modalidad" value="virtual" checked>
+                    <i class="bx bx-laptop"></i>
+                    Virtual
+                </label>
+                <label class="radio-card">
+                    <input type="radio" name="modalidad" value="presencial">
+                    <i class="bx bx-buildings"></i>
+                    Presencial
+                </label>
+                <label class="radio-card">
+                    <input type="radio" name="modalidad" value="hibrido">
+                    <i class="bx bx-transfer-alt"></i>
+                    Híbrido
+                </label>
+            </div>
+        </div>
+
+        <!-- Cupo máximo (range) -->
+        <div class="form-group range-group">
+            <label class="form-label" for="cupo">Cupo máximo de estudiantes</label>
+            <span class="range-group__value" id="cupo-value">10 estudiantes</span>
+            <input class="form-range" id="cupo" type="range" min="1" max="50" value="10">
+        </div>
+
+        <!-- Switch de inscripción abierta -->
+        <div class="switch-group">
+            <div>
+                <div class="switch-group__text">Inscripciones abiertas</div>
+                <div class="switch-group__hint">Permite que los estudiantes se inscriban ahora</div>
+            </div>
+            <label class="form-switch">
+                <input type="checkbox" id="inscripcion-abierta" checked>
+                <span class="form-switch__track"></span>
+            </label>
+        </div>
+
+
+        <!-- ======= EXTRAS (variedad de inputs) ======= -->
+        <h2 class="schedule-card__subtitle">
+            <i class="bx bx-package"></i> Información adicional
+        </h2>
+
+        <!-- Teléfono de contacto -->
+        <div class="form-group">
+            <label class="form-label" for="telefono">Teléfono de contacto</label>
+            <div class="form-field">
+                <i class="bx bx-phone form-field__icon"></i>
+                <input class="form-input" id="telefono" type="tel" placeholder="+57 300 123 4567">
+            </div>
+        </div>
+
+        <!-- Precio por hora -->
+        <div class="form-group">
+            <label class="form-label" for="precio">Precio por hora (COP)</label>
+            <div class="form-field">
+                <i class="bx bx-dollar form-field__icon"></i>
+                <input class="form-input" id="precio" type="number" min="0" placeholder="Ej. 45000">
+            </div>
+        </div>
+
+        <!-- Nivel del servicio -->
+        <div class="form-group">
+            <label class="form-label" for="nivel">Nivel</label>
+            <select class="form-select" id="nivel">
+                <option value="">Selecciona el nivel...</option>
+                <option value="basico">Básico</option>
+                <option value="intermedio">Intermedio</option>
+                <option value="avanzado">Avanzado</option>
+                <option value="todos">Todos los niveles</option>
+            </select>
+        </div>
+
+        <!-- Checkboxes de materiales -->
+        <div class="form-group">
+            <label class="form-label">Materiales incluidos</label>
+            <div class="check-list" id="materiales">
+                <label class="check-item">
+                    <input type="checkbox" value="grabaciones">
+                    <span class="check-item__box"><i class="bx bx-check"></i></span>
+                    Grabaciones de las sesiones
+                </label>
+                <label class="check-item">
+                    <input type="checkbox" value="recursos" checked>
+                    <span class="check-item__box"><i class="bx bx-check"></i></span>
+                    Recursos y plantillas descargables
+                </label>
+                <label class="check-item">
+                    <input type="checkbox" value="soporte">
+                    <span class="check-item__box"><i class="bx bx-check"></i></span>
+                    Soporte por chat entre sesiones
+                </label>
+                <label class="check-item">
+                    <input type="checkbox" value="certificado">
+                    <span class="check-item__box"><i class="bx bx-check"></i></span>
+                    Certificado de finalización
+                </label>
+            </div>
+        </div>
+
+        <!-- Notas -->
+        <div class="form-group">
+            <label class="form-label" for="notas-horario">Notas del horario</label>
+            <textarea class="form-input" id="notas-horario" placeholder="Ej. No disponible festivos, se puede reprogramar con 24h de aviso..."></textarea>
+        </div>
+
+
+        <!-- Botón -->
+        <button class="form-button" type="button" id="save-schedule">Guardar Horarios</button>
+
+    </div>
+
+</section>
+
+
+<script>
+    /* ============================================================
+       CHIPS DE DÍAS (selección múltiple)
+    ============================================================ */
+    document.getElementById('days-chips').addEventListener('click', (e) => {
+        const chip = e.target.closest('.day-chip');
+        if (chip) chip.classList.toggle('is-selected');
+    });
+
+
+    /* ============================================================
+       RADIO CARDS (modalidad)
+    ============================================================ */
+    document.getElementById('modalidad').addEventListener('change', () => {
+        document.querySelectorAll('#modalidad .radio-card').forEach(card => {
+            const radio = card.querySelector('input');
+            card.classList.toggle('is-selected', radio.checked);
+        });
+    });
+
+
+    /* ============================================================
+       CHECKBOXES PERSONALIZADOS
+    ============================================================ */
+    document.getElementById('materiales').addEventListener('change', (e) => {
+        const item = e.target.closest('.check-item');
+        if (item) item.classList.toggle('is-checked', e.target.checked);
+    });
+
+    // Sincronizar estado inicial (los que ya vienen marcados)
+    document.querySelectorAll('#materiales .check-item input').forEach(input => {
+        input.closest('.check-item').classList.toggle('is-checked', input.checked);
+    });
+
+
+    /* ============================================================
+       RANGE SLIDER (muestra el valor en vivo)
+    ============================================================ */
+    const cupoInput  = document.getElementById('cupo');
+    const cupoValue  = document.getElementById('cupo-value');
+
+    cupoInput.addEventListener('input', () => {
+        cupoValue.textContent = cupoInput.value + (cupoInput.value == 1 ? ' estudiante' : ' estudiantes');
+    });
+
+
+    /* ============================================================
+       BOTÓN GUARDAR (demo — aquí recolectarías los datos)
+    ============================================================ */
+    document.getElementById('save-schedule').addEventListener('click', () => {
+        const dias = [...document.querySelectorAll('.day-chip.is-selected')]
+            .map(c => c.dataset.day);
+
+        console.log({
+            dias,
+            horaInicio:  document.getElementById('hora-inicio').value,
+            horaFin:     document.getElementById('hora-fin').value,
+            numHoras:    document.getElementById('num-horas').value,
+            sesiones:    document.getElementById('num-sesiones').value,
+            modalidad:   document.querySelector('input[name="modalidad"]:checked').value,
+            cupo:        cupoInput.value,
+            inscripcion: document.getElementById('inscripcion-abierta').checked
+        });
+
+        alert('Horarios guardados (revisa la consola para ver los datos).');
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../Tablas/Tablas.CSS">
+
+     <!-- Basic Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+    <!-- Filled Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+    <!-- Brand Icons -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+
+</head>
+<body>
+      <div class="services-card">
+
+    <!-- Cabecera -->
+    <div class="services-card__header">
+      <span>Servicio</span>
+      <span>Categoría</span>
+      <span>Estado</span>
+      <span>Próxima Sesión</span>
+      <span>Progreso</span>
+      <span>Acción</span>
+    </div>
+
+    <!-- Fila 1: Activo -->
+    <div class="row">
+      <div class="service">
+        <div class="service__icon service__icon--blue">
+          <i class='bx bxs-ship'></i>
+        </div>
+        <div>
+          <p class="service__name">Arquitectura en Docker</p>
+          <p class="service__meta">12 Sesiones Totales</p>
+        </div>
+      </div>
+
+      <div><span class="tag tag--cloud">Cloud</span></div>
+
+      <div>
+        <span class="status status--active">
+          <i class='bx bx-play-circle'></i> Activo
+        </span>
+      </div>
+
+      <div class="next-session">Mié - 16:00 PM</div>
+
+      <div class="progress">
+        <span class="progress__label">65%</span>
+        <div class="progress__track">
+          <div class="progress__bar progress__bar--green" style="width: 65%;"></div>
+        </div>
+      </div>
+
+      <button class="action" aria-label="Ver servicio">
+        <i class='bx bx-show'></i>
+      </button>
+    </div>
+
+    <!-- Fila 2: En Proceso -->
+    <div class="row">
+      <div class="service">
+        <div class="service__icon service__icon--green">
+          <i class='bx bx-refresh'></i>
+        </div>
+        <div>
+          <p class="service__name">Microservicios Enterprise</p>
+          <p class="service__meta">8 Sesiones Totales</p>
+        </div>
+      </div>
+
+      <div><span class="tag tag--backend">Backend</span></div>
+
+      <div>
+        <span class="status status--progress">
+          <i class='bx bx-time-five'></i> En Proceso
+        </span>
+      </div>
+
+      <div class="next-session">Jue - 18:00 PM</div>
+
+      <div class="progress">
+        <span class="progress__label">10%</span>
+        <div class="progress__track">
+          <div class="progress__bar progress__bar--orange" style="width: 10%;"></div>
+        </div>
+      </div>
+
+      <button class="action" aria-label="Ver servicio">
+        <i class='bx bx-show'></i>
+      </button>
+    </div>
+
+    <!-- Fila 3: Completado -->
+    <div class="row">
+      <div class="service">
+        <div class="service__icon service__icon--pink">
+          <i class='bx bxs-data'></i>
+        </div>
+        <div>
+          <p class="service__name">Redis Cache Systems</p>
+          <p class="service__meta">Sesión Finalizada</p>
+        </div>
+      </div>
+
+      <div><span class="tag tag--backend">Backend</span></div>
+
+      <div>
+        <span class="status status--done">
+          <i class='bx bx-check-circle'></i> Completado
+        </span>
+      </div>
+
+      <div class="next-session">Terminado</div>
+
+      <div class="progress">
+        <span class="progress__label">100%</span>
+        <div class="progress__track">
+          <div class="progress__bar progress__bar--blue" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <button class="action" aria-label="Ver servicio">
+        <i class='bx bx-show'></i>
+      </button>
+    </div>
+
+  </div>
+</body>
+</html>
