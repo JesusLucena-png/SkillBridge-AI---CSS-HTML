@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargando - SkillBridge AI</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+    </style>
+</head>
+<body>
+
+<style>
+/* ============================================================
+   VARIABLES
+   ============================================================ */
+:root {
+    --color-white: 255 255 255;
+    --color-background: 15 23 42;
+    --color-primary: 40 97 216;
+    --color-dark: 26 26 26;
+    --color-text: 95 95 95;
+    --color-border: 223 223 223;
+
+    --status-active: 16 185 129;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: rgb(var(--color-dark));
+}
+
+
+/* ============================================================
+   PANTALLA DE CARGA (SPLASH)
+   ============================================================ */
+.splash {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 34px;
+
+    background: linear-gradient(160deg, #093b8c 0%, #0959db 60%, #2f7cf6 100%);
+
+    color: rgb(var(--color-white));
+
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+/* Estado oculto (cuando termina la carga) */
+.splash.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
+}
+
+
+/* ---------- Logo ---------- */
+.splash__logo {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 18px;
+
+    animation: logoIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Anillo giratorio alrededor del logo */
+.splash__logo-ring {
+    position: relative;
+
+    display: flex;
+
+    width: 110px;
+    height: 110px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 28px;
+
+    background-color: rgb(var(--color-white));
+
+    font-size: 48px;
+
+    color: rgb(var(--color-primary));
+
+    box-shadow: 0 20px 50px rgb(var(--color-background) / 40%);
+
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+/* Spinners orbitando */
+.splash__logo-ring::before,
+.splash__logo-ring::after {
+    content: "";
+
+    position: absolute;
+    inset: -14px;
+
+    border-radius: 36px;
+
+    border: 3px solid transparent;
+}
+
+.splash__logo-ring::before {
+    border-top-color: rgb(var(--color-white) / 90%);
+    border-right-color: rgb(var(--color-white) / 90%);
+
+    animation: spin 1.4s linear infinite;
+}
+
+.splash__logo-ring::after {
+    inset: -26px;
+
+    border-bottom-color: rgb(var(--color-white) / 35%);
+    border-left-color: rgb(var(--color-white) / 35%);
+
+    animation: spin 2.4s linear infinite reverse;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+
+@keyframes logoIn {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.splash__brand {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.splash__tagline {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+
+    color: rgb(var(--color-white) / 60%);
+}
+
+
+/* ---------- Barra de progreso ---------- */
+.splash__progress {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 280px;
+
+    align-items: center;
+
+    gap: 12px;
+
+    animation: fadeUp 0.8s 0.3s ease both;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.splash__progress-track {
+    width: 100%;
+    height: 7px;
+
+    border-radius: 10px;
+
+    background-color: rgb(var(--color-white) / 18%);
+
+    overflow: hidden;
+}
+
+.splash__progress-fill {
+    width: 0%;
+    height: 100%;
+
+    border-radius: 10px;
+
+    background: linear-gradient(90deg, #b8d4ff, rgb(var(--color-white)));
+
+    box-shadow: 0 0 14px rgb(var(--color-white) / 60%);
+
+    transition: width 0.25s ease;
+}
+
+.splash__progress-info {
+    display: flex;
+
+    width: 100%;
+
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Puntos animados "Cargando..." */
+.splash__loading {
+    color: rgb(var(--color-white) / 70%);
+}
+
+.splash__loading::after {
+    content: "";
+
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0%   { content: ""; }
+    25%  { content: "."; }
+    50%  { content: ".."; }
+    75%  { content: "..."; }
+}
+
+.splash__percentage {
+    font-variant-numeric: tabular-nums;
+
+    color: rgb(var(--color-white));
+}
+
+
+/* ---------- Pie del splash ---------- */
+.splash__footer {
+    position: absolute;
+    bottom: 34px;
+
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    color: rgb(var(--color-white) / 40%);
+
+    animation: fadeUp 0.8s 0.5s ease both;
+}
+
+
+/* ============================================================
+   CONTENIDO DE LA APP (se revela al terminar)
+   ============================================================ */
+.app-content {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 100vh;
+
+    padding: 40px 24px;
+
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background-color: #f7f9fd;
+}
+
+.app-content h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+}
+
+.app-content p {
+    max-width: 420px;
+
+    font-size: 14.5px;
+    line-height: 1.65;
+
+    color: rgb(var(--color-text));
+}
+
+/* Botón para volver a ver la carga (demo) */
+.app-content__reload {
+    margin-top: 10px;
+    padding: 12px 24px;
+
+    border: none;
+    border-radius: 12px;
+
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-white));
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 16px rgb(var(--color-primary) / 35%);
+
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.app-content__reload:hover {
+    background-color: rgb(35 84 190);
+}
+
+.app-content__reload:active {
+    transform: scale(0.97);
+}
+</style>
+
+<!-- Boxicons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+
+
+<!-- ============================================================
+     PANTALLA DE CARGA
+============================================================ -->
+<div class="splash" id="splash">
+
+    <!-- Logo -->
+    <div class="splash__logo">
+        <div class="splash__logo-ring">
+            <i class="bx bx-sparkles-alt"></i>
+        </div>
+        <div>
+            <div class="splash__brand">SkillBridge AI</div>
+            <div class="splash__tagline">Arquitectura · Caché · IA</div>
+        </div>
+    </div>
+
+    <!-- Progreso -->
+    <div class="splash__progress">
+        <div class="splash__progress-track">
+            <div class="splash__progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="splash__progress-info">
+            <span class="splash__loading">Cargando</span>
+            <span class="splash__percentage" id="progress-percentage">0%</span>
+        </div>
+    </div>
+
+    <!-- Pie -->
+    <span class="splash__footer">© 2024 SkillBridge AI — Proyecto Integrador</span>
+
+</div>
+
+
+<!-- ============================================================
+     CONTENIDO DE LA APLICACIÓN (se muestra al terminar)
+============================================================ -->
+<main class="app-content">
+
+    <h1>¡Bienvenido a SkillBridge AI!</h1>
+    <p>
+        La carga ha finalizado. Aquí iría el contenido real de tu aplicación:
+        el catálogo de servicios, tu panel o la página principal.
+    </p>
+
+    <!-- Solo demo: vuelve a mostrar la pantalla de carga -->
+    <button class="app-content__reload" id="reload-btn" type="button">
+        <i class="bx bx-refresh"></i> Volver a mostrar la carga
+    </button>
+
+</main>
+
+
+<script>
+    /* ============================================================
+       SIMULACIÓN DE CARGA
+       — con tu backend, avanza el progreso con eventos reales
+         (recursos cargados, API lista, etc.)
+    ============================================================ */
+    const splash      = document.getElementById('splash');
+    const fill        = document.getElementById('progress-fill');
+    const percentage  = document.getElementById('progress-percentage');
+
+    let progress = 0;
+
+    function tick() {
+        // Avance aleatorio que se desacelera cerca del 100%
+        const step = progress < 70
+            ? Math.random() * 14 + 4
+            : Math.random() * 6 + 1;
+
+        progress = Math.min(100, progress + step);
+
+        fill.style.width = progress + '%';
+        percentage.textContent = Math.floor(progress) + '%';
+
+        if (progress < 100) {
+            setTimeout(tick, 160 + Math.random() * 240);
+        } else {
+            // Termina: espera un instante y oculta el splash
+            setTimeout(() => splash.classList.add('is-hidden'), 450);
+        }
+    }
+
+    // Iniciar la carga al abrir la página
+    window.addEventListener('load', () => setTimeout(tick, 400));
+
+
+    /* ============================================================
+       DEMO: botón para reiniciar la carga
+    ============================================================ */
+    document.getElementById('reload-btn').addEventListener('click', () => {
+        progress = 0;
+        fill.style.width = '0%';
+        percentage.textContent = '0%';
+
+        splash.classList.remove('is-hidden');
+        setTimeout(tick, 500);
+    });
+</script>
+
+</body>
+</html>
