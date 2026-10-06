@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitectura en Docker - SkillBridge AI</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+    </style>
+</head>
+<body>
+
+<style>
+/* ============================================================
+   VARIABLES
+   ============================================================ */
+:root {
+    --color-white: 255 255 255;
+    --color-background: 15 23 42;
+    --color-primary: 40 97 216;
+    --color-dark: 26 26 26;
+    --color-text: 95 95 95;
+    --color-border: 223 223 223;
+
+    --status-active: 16 185 129;
+    --status-in-progress: 255 169 23;
+
+    --color-primary-10: rgb(var(--color-primary) / 10%);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    background-color: #f7f9fd;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: rgb(var(--color-dark));
+}
+
+
+/* ============================================================
+   HERO / BANNER
+   ============================================================ */
+.service-hero {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 420px;
+
+    padding: 28px 6% 90px;
+
+    justify-content: flex-end;
+
+    background: linear-gradient(180deg, rgb(var(--color-background) / 30%) 0%, rgb(var(--color-background) / 85%) 75%),
+                linear-gradient(140deg, #22304a, #0f172a);
+
+    color: rgb(var(--color-white));
+}
+
+/* Breadcrumb */
+.service-hero__breadcrumb {
+    display: flex;
+
+    margin-bottom: 14px;
+
+    gap: 10px;
+    align-items: center;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.service-hero__breadcrumb a {
+    color: rgb(var(--color-white) / 55%);
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.service-hero__breadcrumb a:hover {
+    color: rgb(var(--color-white));
+}
+
+.service-hero__breadcrumb i {
+    font-size: 12px;
+    color: rgb(var(--color-white) / 35%);
+}
+
+.service-hero__breadcrumb span {
+    color: rgb(var(--color-white));
+}
+
+.service-hero__title {
+    font-size: clamp(30px, 4.5vw, 52px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+}
+
+
+/* ============================================================
+   CONTENIDO PRINCIPAL
+   ============================================================ */
+.service-detail {
+    display: grid;
+
+    width: 100%;
+    max-width: 1180px;
+
+    margin: -60px auto 0;
+    padding: 0 24px 80px;
+
+    grid-template-columns: 1.7fr 1fr;
+    gap: 28px;
+
+    align-items: start;
+
+    position: relative;
+    z-index: 1;
+}
+
+.card {
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 22px;
+
+    background-color: rgb(var(--color-white));
+
+    box-shadow: 0 8px 30px rgb(var(--color-background) / 6%);
+}
+
+.card__section {
+    padding: 30px;
+}
+
+.card__title {
+    margin-bottom: 16px;
+
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+}
+
+.card__text {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.75;
+
+    color: rgb(var(--color-text));
+}
+
+
+/* ---------- Columna izquierda ---------- */
+.service-info__columns {
+    display: grid;
+
+    margin-top: 22px;
+
+    grid-template-columns: 1fr 1fr;
+    gap: 26px;
+}
+
+.service-info__subtitle {
+    display: flex;
+
+    margin-bottom: 14px;
+
+    gap: 8px;
+    align-items: center;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.service-info__subtitle i {
+    font-size: 17px;
+    color: rgb(var(--color-primary));
+}
+
+/* Listas con check */
+.check-list {
+    display: flex;
+    flex-direction: column;
+
+    list-style: none;
+
+    gap: 10px;
+}
+
+.check-list li {
+    display: flex;
+
+    gap: 10px;
+    align-items: flex-start;
+
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.55;
+
+    color: rgb(var(--color-text));
+}
+
+.check-list li i {
+    margin-top: 2px;
+
+    font-size: 16px;
+    color: rgb(var(--status-active));
+}
+
+
+/* ---------- Columna derecha: card de compra ---------- */
+.buy-card {
+    position: sticky;
+    top: 24px;
+
+    padding: 28px;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 22px;
+
+    background-color: rgb(var(--color-white));
+
+    box-shadow: 0 10px 36px rgb(var(--color-background) / 10%);
+}
+
+.buy-card__price {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.buy-card__price small {
+    font-size: 14px;
+    font-weight: 700;
+
+    color: rgb(var(--color-text));
+}
+
+.buy-card__seats {
+    display: flex;
+
+    margin: 6px 0 22px;
+
+    gap: 6px;
+    align-items: center;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    color: rgb(var(--status-active));
+}
+
+.buy-card__seats i {
+    font-size: 14px;
+}
+
+/* Lista de detalles */
+.buy-card__details {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 22px;
+
+    list-style: none;
+
+    gap: 13px;
+}
+
+.buy-card__details li {
+    display: flex;
+
+    gap: 10px;
+    align-items: center;
+
+    font-size: 13.5px;
+
+    color: rgb(var(--color-text));
+}
+
+.buy-card__details li i {
+    font-size: 17px;
+    color: rgb(var(--color-primary));
+}
+
+.buy-card__details strong {
+    margin-left: auto;
+
+    font-weight: 700;
+
+    color: rgb(var(--color-dark));
+
+    text-align: right;
+}
+
+/* Botón inscribirse */
+.buy-card__button {
+    display: flex;
+
+    width: 100%;
+    min-height: 54px;
+
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 14px;
+
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-white));
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 16px rgb(var(--color-primary) / 35%);
+
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.buy-card__button:hover {
+    background-color: rgb(35 84 190);
+}
+
+.buy-card__button:active {
+    transform: scale(0.98);
+}
+
+/* Garantías */
+.buy-card__guarantees {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 20px;
+
+    gap: 10px;
+}
+
+.buy-card__guarantees span {
+    display: flex;
+
+    gap: 8px;
+    align-items: center;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: rgb(var(--color-text));
+}
+
+.buy-card__guarantees i {
+    font-size: 15px;
+    color: rgb(var(--status-active));
+}
+
+
+/* ============================================================
+   INSTRUCTOR
+   ============================================================ */
+.instructor-card {
+    display: flex;
+
+    margin-top: 28px;
+    padding: 26px 30px;
+
+    gap: 20px;
+    align-items: flex-start;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 22px;
+
+    background-color: rgb(var(--color-white));
+
+    box-shadow: 0 8px 30px rgb(var(--color-background) / 6%);
+}
+
+.instructor-card__avatar {
+    display: flex;
+
+    width: 76px;
+    height: 76px;
+
+    flex-shrink: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background: linear-gradient(135deg, #0959db, #2f7cf6);
+
+    font-size: 26px;
+    font-weight: 800;
+
+    color: rgb(var(--color-white));
+
+    overflow: hidden;
+}
+
+.instructor-card__name {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.instructor-card__role {
+    margin: 3px 0 10px;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+
+    color: rgb(var(--color-primary));
+}
+
+.instructor-card__text {
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.65;
+
+    color: rgb(var(--color-text));
+}
+
+.instructor-card__social {
+    display: flex;
+
+    margin-top: 12px;
+
+    gap: 8px;
+}
+
+.instructor-card__social a {
+    display: flex;
+
+    width: 32px;
+    height: 32px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background-color: #f4f6fb;
+
+    font-size: 15px;
+    color: rgb(var(--color-text));
+    text-decoration: none;
+
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.instructor-card__social a:hover {
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-white));
+}
+
+
+/* ============================================================
+   RESEÑAS
+   ============================================================ */
+.reviews {
+    width: 100%;
+    max-width: 1180px;
+
+    margin: 0 auto;
+    padding: 0 24px 80px;
+}
+
+.reviews__title {
+    margin-bottom: 24px;
+
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.reviews__grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.review-card {
+    padding: 26px;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 20px;
+
+    background-color: rgb(var(--color-white));
+
+    box-shadow: 0 6px 22px rgb(var(--color-background) / 5%);
+}
+
+.review-card__stars {
+    display: flex;
+
+    gap: 3px;
+
+    font-size: 15px;
+    color: rgb(var(--status-in-progress));
+}
+
+.review-card__text {
+    margin: 14px 0 18px;
+
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.7;
+
+    color: rgb(var(--color-text));
+}
+
+.review-card__author {
+    display: flex;
+
+    gap: 12px;
+    align-items: center;
+}
+
+.review-card__avatar {
+    display: flex;
+
+    width: 40px;
+    height: 40px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    color: rgb(var(--color-white));
+}
+
+.review-card__avatar--1 { background: linear-gradient(135deg, #0959db, #2f7cf6); }
+.review-card__avatar--2 { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+
+.review-card__name {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.review-card__role {
+    font-size: 12px;
+    font-weight: 500;
+
+    color: rgb(var(--color-text));
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+    .service-detail {
+        grid-template-columns: 1fr;
+    }
+
+    .buy-card {
+        position: static;
+    }
+
+    .service-info__columns,
+    .reviews__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .instructor-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .instructor-card__social {
+        justify-content: center;
+    }
+
+    .service-hero {
+        padding: 24px 6% 70px;
+    }
+}
+</style>
+
+<!-- Boxicons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+<link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+<link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="stylesheet">
+
+
+<!-- ============================================================
+     HERO DEL SERVICIO
+============================================================ -->
+<section class="service-hero">
+
+    <nav class="service-hero__breadcrumb">
+        <a href="#">Inicio</a>
+        <i class="bx bx-chevron-right"></i>
+        <a href="#">Servicios</a>
+        <i class="bx bx-chevron-right"></i>
+        <span>Arquitectura en Docker</span>
+    </nav>
+
+    <h1 class="service-hero__title">Arquitectura en Docker y Microservicios</h1>
+
+</section>
+
+
+<!-- ============================================================
+     DETALLE DEL SERVICIO
+============================================================ -->
+<div class="service-detail">
+
+    <!-- Columna izquierda -->
+    <div>
+
+        <div class="card card__section">
+
+            <h2 class="card__title">Descripción General</h2>
+
+            <p class="card__text">
+                Domina la forma en que los desarrolladores y las organizaciones construyen,
+                comparten y ejecutan aplicaciones. Este programa integral está diseñado para
+                proporcionar una base técnica sólida en virtualización ligera, centrándose en
+                el despliegue de arquitecturas de microservicios robustas y escalables.
+            </p>
+
+            <div class="service-info__columns">
+
+                <div>
+                    <h3 class="service-info__subtitle"><i class="bx bx-target-lock"></i> Objetivos de Aprendizaje</h3>
+                    <ul class="check-list">
+                        <li><i class="bx bx-check-circle"></i> Creación y optimización de imágenes Docker con multi-stage builds.</li>
+                        <li><i class="bx bx-check-circle"></i> Orquestación básica con Docker Compose para entornos locales.</li>
+                        <li><i class="bx bx-check-circle"></i> Gestión de redes aisladas y seguridad de contenedores.</li>
+                        <li><i class="bx bx-check-circle"></i> Integración de volúmenes para persistencia de datos.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="service-info__subtitle"><i class="bx bx-list-check"></i> Prerequisitos</h3>
+                    <ul class="check-list">
+                        <li><i class="bx bx-check-circle"></i> Conocimiento básico de Linux y línea de comandos.</li>
+                        <li><i class="bx bx-check-circle"></i> Experiencia previa en desarrollo de APIs (Java/SpringBoot).</li>
+                        <li><i class="bx bx-check-circle"></i> Entorno de desarrollo con mínimo 8GB de RAM.</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Instructor -->
+        <div class="instructor-card">
+
+            <div class="instructor-card__avatar">
+                <span>RV</span>
+            </div>
+
+            <div>
+                <h3 class="instructor-card__name">Dr. Ricardo Valencia</h3>
+                <p class="instructor-card__role">Cloud Systems Architect &amp; PhD</p>
+                <p class="instructor-card__text">
+                    Especialista con más de 15 años de experiencia en el despliegue de arquitecturas
+                    distribuidas en AWS y Azure. Colaborador activo en proyectos de código abierto
+                    de la CNCF.
+                </p>
+                <div class="instructor-card__social">
+                    <a href="#" aria-label="LinkedIn"><i class="bx bxl-linkedin"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="bx bxl-github"></i></a>
+                    <a href="#" aria-label="Sitio web"><i class="bx bx-globe"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Columna derecha: card de compra -->
+    <aside class="buy-card">
+
+        <div class="buy-card__price">$120,000 <small>COP</small></div>
+
+        <span class="buy-card__seats">
+            <i class="bx bx-check-circle"></i> 25 Cupos Disponibles
+        </span>
+
+        <ul class="buy-card__details">
+            <li><i class="bx bx-calendar"></i> Horario <strong>Miércoles, 16:00 PM</strong></li>
+            <li><i class="bx bx-time-five"></i> Duración <strong>2 Horas / Sesión</strong></li>
+            <li><i class="bx bx-revision"></i> Frecuencia <strong>Semanal</strong></li>
+            <li><i class="bx bx-collection"></i> Sesiones <strong>12 Total</strong></li>
+            <li><i class="bx bx-play-circle"></i> Inicio <strong>15 Oct, 2024</strong></li>
+        </ul>
+
+        <button class="buy-card__button" type="button">
+            <i class="bx bx-rocket"></i> Inscríbete Ahora
+        </button>
+
+        <div class="buy-card__guarantees">
+            <span><i class="bx bx-shield-quarter"></i> Garantía de satisfacción 100%</span>
+            <span><i class="bx bx-award"></i> Certificado de finalización</span>
+        </div>
+
+    </aside>
+
+</div>
+
+
+<!-- ============================================================
+     RESEÑAS DE LA COMUNIDAD
+============================================================ -->
+<section class="reviews">
+
+    <h2 class="reviews__title">Reseñas de la Comunidad</h2>
+
+    <div class="reviews__grid">
+
+        <article class="review-card">
+            <div class="review-card__stars">
+                <i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i>
+            </div>
+            <p class="review-card__text">
+                "El enfoque práctico y la arquitectura hexagonal dentro de Docker fue lo que más me sirvió.
+                Absolutamente recomendado."
+            </p>
+            <div class="review-card__author">
+                <span class="review-card__avatar review-card__avatar--1">JD</span>
+                <div>
+                    <div class="review-card__name">Juan David L.</div>
+                    <div class="review-card__role">Backend Developer</div>
+                </div>
+            </div>
+        </article>
+
+        <article class="review-card">
+            <div class="review-card__stars">
+                <i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i><i class="bx bxs-star"></i>
+            </div>
+            <p class="review-card__text">
+                "Excelente curso para principiantes y medianos. El despliegue de microservicios reactivos
+                está muy bien estructurado."
+            </p>
+            <div class="review-card__author">
+                <span class="review-card__avatar review-card__avatar--2">MP</span>
+                <div>
+                    <div class="review-card__name">María Paula R.</div>
+                    <div class="review-card__role">Full Stack Developer</div>
+                </div>
+            </div>
+        </article>
+
+    </div>
+
+</section>
+
+</body>
+</html>

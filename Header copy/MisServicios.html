@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Servicios - SkillBridge AI</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+    </style>
+</head>
+<body>
+
+<style>
+/* ============================================================
+   VARIABLES
+   ============================================================ */
+:root {
+    --color-white: 255 255 255;
+    --color-background: 15 23 42;
+    --color-primary: 40 97 216;
+    --color-dark: 26 26 26;
+    --color-text: 95 95 95;
+    --color-border: 223 223 223;
+
+    --status-active: 16 185 129;
+    --status-in-progress: 255 169 23;
+    --status-cancelled: 218 35 35;
+
+    --color-primary-10: rgb(var(--color-primary) / 10%);
+
+    /* Categorías */
+    --category-frontend: 59 130 246;
+    --category-backend: 16 185 129;
+    --category-devops: 249 115 22;
+    --category-cloud: 14 165 233;
+    --category-ai: 217 70 239;
+    --category-databases: 245 158 11;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    padding: 50px 16px 80px;
+
+    background-color: #f7f9fd;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    color: rgb(var(--color-dark));
+}
+
+
+/* ============================================================
+   ESTRUCTURA
+   ============================================================ */
+.services-section {
+    width: 100%;
+    max-width: 1180px;
+
+    margin: 0 auto;
+}
+
+
+/* ============================================================
+   BARRA DE BÚSQUEDA + CHIPS
+   ============================================================ */
+.search-bar {
+    display: flex;
+
+    margin-bottom: 40px;
+    padding: 18px 22px;
+
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 20px;
+
+    background-color: rgb(var(--color-white));
+
+    box-shadow: 0 8px 30px rgb(var(--color-background) / 6%);
+
+    flex-wrap: wrap;
+}
+
+/* Input de búsqueda */
+.search-bar__input {
+    position: relative;
+
+    display: flex;
+
+    flex: 1;
+    min-width: 240px;
+
+    align-items: center;
+}
+
+.search-bar__icon {
+    position: absolute;
+    left: 16px;
+
+    font-size: 19px;
+    color: rgb(var(--color-text) / 60%);
+
+    pointer-events: none;
+}
+
+.search-bar__field {
+    width: 100%;
+    min-height: 50px;
+
+    padding: 12px 16px 12px 48px;
+
+    background-color: #f4f6fb;
+    border: 1px solid transparent;
+    border-radius: 14px;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 14.5px;
+    font-weight: 500;
+
+    color: rgb(var(--color-dark));
+
+    outline: none;
+
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-bar__field::placeholder {
+    color: rgb(var(--color-text) / 60%);
+}
+
+.search-bar__field:focus {
+    background-color: rgb(var(--color-white));
+    border-color: rgb(var(--color-primary));
+    box-shadow: 0 0 0 4px rgb(var(--color-primary) / 12%);
+}
+
+/* Chips de tecnología */
+.search-bar__chips {
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+.tech-chip {
+    display: inline-flex;
+
+    padding: 9px 16px;
+
+    gap: 7px;
+    align-items: center;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 22px;
+
+    background-color: rgb(var(--color-white));
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+
+    color: rgb(var(--color-text));
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.tech-chip__dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background-color: rgb(var(--cat));
+}
+
+.tech-chip:hover {
+    border-color: rgb(var(--cat));
+    color: rgb(var(--cat));
+}
+
+.tech-chip.is-selected {
+    border-color: rgb(var(--cat));
+    background-color: rgb(var(--cat) / 12%);
+    color: rgb(var(--cat));
+}
+
+
+/* ============================================================
+   CABECERA DE LA LISTA
+   ============================================================ */
+.services-header {
+    display: flex;
+
+    margin-bottom: 30px;
+
+    gap: 14px;
+    align-items: center;
+}
+
+.services-header__icon {
+    display: flex;
+
+    width: 52px;
+    height: 52px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
+
+    background-color: rgb(var(--status-active) / 12%);
+
+    font-size: 26px;
+    color: rgb(var(--status-active));
+}
+
+.services-header__title {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+}
+
+.services-header__link {
+    margin-left: auto;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: rgb(var(--color-primary));
+    text-decoration: none;
+
+    transition: opacity 0.2s ease;
+}
+
+.services-header__link:hover {
+    opacity: 0.75;
+}
+
+
+/* ============================================================
+   FILTROS: SELECTS
+   ============================================================ */
+.filters {
+    display: flex;
+
+    margin-bottom: 28px;
+    padding: 16px 18px;
+
+    gap: 14px;
+    align-items: center;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 16px;
+
+    background-color: rgb(var(--color-white));
+
+    flex-wrap: wrap;
+}
+
+.filters__group {
+    display: flex;
+
+    gap: 8px;
+    align-items: center;
+}
+
+.filters__label {
+    display: flex;
+
+    gap: 6px;
+    align-items: center;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    color: rgb(var(--color-text));
+
+    white-space: nowrap;
+}
+
+.filters__label i {
+    font-size: 16px;
+    color: rgb(var(--color-primary));
+}
+
+.form-select {
+    min-height: 44px;
+
+    padding: 9px 40px 9px 14px;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 12px;
+
+    background-color: #f4f6fb;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%235f5f5f' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+
+    color: rgb(var(--color-dark));
+
+    appearance: none;
+
+    cursor: pointer;
+    outline: none;
+
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-select:focus {
+    background-color: rgb(var(--color-white));
+    border-color: rgb(var(--color-primary));
+    box-shadow: 0 0 0 4px rgb(var(--color-primary) / 12%);
+}
+
+
+/* ============================================================
+   GRID DE SERVICIOS
+   ============================================================ */
+.services-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+/* ---------- Card del servicio ---------- */
+.service-card {
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 22px;
+
+    background-color: rgb(var(--color-white));
+
+    box-shadow: 0 6px 22px rgb(var(--color-background) / 5%);
+
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 16px 36px rgb(var(--color-background) / 10%);
+}
+
+.service-card__image {
+    position: relative;
+
+    display: flex;
+
+    height: 190px;
+
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(140deg, #22304a, #0f172a);
+
+    font-size: 30px;
+    font-weight: 800;
+
+    color: rgb(var(--color-white) / 30%);
+}
+
+/* Badge SUSCRITO */
+.service-card__badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+
+    display: inline-flex;
+
+    padding: 7px 14px;
+
+    gap: 6px;
+    align-items: center;
+
+    border-radius: 20px;
+
+    background-color: rgb(var(--status-active));
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+
+    color: rgb(var(--color-white));
+}
+
+.service-card__badge i {
+    font-size: 14px;
+}
+
+.service-card__body {
+    display: flex;
+    flex-direction: column;
+
+    padding: 22px;
+
+    gap: 12px;
+
+    flex: 1;
+}
+
+/* Tag de categoría */
+.service-card__tag {
+    display: inline-flex;
+
+    align-self: flex-start;
+
+    padding: 5px 12px;
+
+    gap: 6px;
+    align-items: center;
+
+    border-radius: 18px;
+
+    background-color: rgb(var(--cat) / 12%);
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+
+    color: rgb(var(--cat));
+}
+
+.service-card__tag::before {
+    content: "";
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background-color: rgb(var(--cat));
+}
+
+.service-card__title {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+}
+
+.service-card__text {
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.6;
+
+    color: rgb(var(--color-text));
+}
+
+/* Pie: próxima sesión + precio */
+.service-card__meta {
+    display: flex;
+
+    margin-top: auto;
+
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.service-card__session {
+    display: flex;
+
+    gap: 6px;
+    align-items: center;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: rgb(var(--color-text));
+}
+
+.service-card__session i {
+    font-size: 16px;
+    color: rgb(var(--color-primary));
+}
+
+.service-card__price {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+/* Botón verde Acceder al Panel */
+.service-card__button {
+    display: flex;
+
+    width: 100%;
+    min-height: 50px;
+
+    margin-top: 6px;
+
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 14px;
+
+    background-color: rgb(var(--status-active));
+    color: rgb(var(--color-white));
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 16px rgb(var(--status-active) / 30%);
+
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.service-card__button:hover {
+    background-color: rgb(10 156 108);
+}
+
+.service-card__button:active {
+    transform: scale(0.98);
+}
+
+/* Sin resultados */
+.services-empty {
+    display: none;
+
+    padding: 50px 20px;
+
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: rgb(var(--color-text));
+}
+
+.services-empty.is-visible {
+    display: block;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 980px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .services-header__link {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .services-header {
+        flex-wrap: wrap;
+    }
+
+    .filters__group {
+        width: 100%;
+    }
+
+    .filters__group .form-select {
+        flex: 1;
+    }
+}
+</style>
+
+<!-- Boxicons -->
+<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
+<link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="stylesheet">
+
+
+<!-- ============================================================
+     MIS SERVICIOS (sin header, sin botones de perfil)
+============================================================ -->
+<section class="services-section">
+
+    <!-- Barra de búsqueda + chips -->
+    <div class="search-bar">
+
+        <div class="search-bar__input">
+            <i class="bx bx-search search-bar__icon"></i>
+            <input class="search-bar__field" id="search-field" type="text" placeholder="Buscar servicios...">
+        </div>
+
+        <div class="search-bar__chips" id="tech-chips">
+            <button type="button" class="tech-chip is-selected" style="--cat: var(--category-cloud);">
+                <span class="tech-chip__dot"></span> Cloud
+            </button>
+            <button type="button" class="tech-chip" style="--cat: var(--category-backend);">
+                <span class="tech-chip__dot"></span> Spring Boot
+            </button>
+            <button type="button" class="tech-chip" style="--cat: var(--category-frontend);">
+                <span class="tech-chip__dot"></span> Angular
+            </button>
+            <button type="button" class="tech-chip" style="--cat: var(--category-ai);">
+                <span class="tech-chip__dot"></span> IA
+            </button>
+        </div>
+
+    </div>
+
+
+    <!-- Título -->
+    <div class="services-header">
+        <span class="services-header__icon"><i class="bx bx-check-circle"></i></span>
+        <h1 class="services-header__title">Mis Servicios</h1>
+        <a href="#" class="services-header__link">Ver actividad</a>
+    </div>
+
+
+    <!-- Filtros: SELECT de categoría + SELECT de ordenamiento -->
+    <div class="filters">
+
+        <div class="filters__group">
+            <span class="filters__label"><i class="bx bx-category"></i> Categoría:</span>
+            <select class="form-select" id="filter-category">
+                <option value="todas">Todas las categorías</option>
+                <option value="backend">Backend</option>
+                <option value="frontend">Frontend</option>
+                <option value="cloud">Cloud</option>
+                <option value="devops">DevOps</option>
+                <option value="ia">IA</option>
+                <option value="databases">Bases de Datos</option>
+            </select>
+        </div>
+
+        <div class="filters__group">
+            <span class="filters__label"><i class="bx bx-sort"></i> Ordenar:</span>
+            <select class="form-select" id="sort-by">
+                <option value="default">Por defecto</option>
+                <option value="az">Nombre: A → Z</option>
+                <option value="za">Nombre: Z → A</option>
+                <option value="price-desc">Mayor precio</option>
+                <option value="price-asc">Menor precio</option>
+                <option value="capacity">Capacidad</option>
+            </select>
+        </div>
+
+    </div>
+
+
+    <!-- Grid de servicios -->
+    <div class="services-grid" id="services-grid">
+
+        <article class="service-card" data-name="Microservicios con Spring Boot" data-price="145000" data-capacity="20" data-category="backend">
+            <div class="service-card__image">
+                Image
+                <span class="service-card__badge"><i class="bx bx-check"></i> SUSCRITO</span>
+            </div>
+            <div class="service-card__body">
+                <span class="service-card__tag" style="--cat: var(--category-backend);">Backend</span>
+                <h3 class="service-card__title">Microservicios con Spring Boot</h3>
+                <p class="service-card__text">
+                    Dominio avanzado de comunicación sincrona y asíncrona en
+                    arquitecturas distribuidas.
+                </p>
+                <div class="service-card__meta">
+                    <span class="service-card__session"><i class="bx bx-calendar"></i> Próxima: Mar - 18:00</span>
+                    <span class="service-card__price">$145,000</span>
+                </div>
+                <button class="service-card__button" type="button">
+                    <i class="bx bx-rocket"></i> Acceder al Panel
+                </button>
+            </div>
+        </article>
+
+        <article class="service-card" data-name="Arquitectura en Docker" data-price="120000" data-capacity="25" data-category="cloud">
+            <div class="service-card__image">
+                Image
+                <span class="service-card__badge"><i class="bx bx-check"></i> SUSCRITO</span>
+            </div>
+            <div class="service-card__body">
+                <span class="service-card__tag" style="--cat: var(--category-cloud);">Cloud</span>
+                <h3 class="service-card__title">Arquitectura en Docker</h3>
+                <p class="service-card__text">
+                    Contenedores, orquestación y despliegue de aplicaciones
+                    modernas en la nube.
+                </p>
+                <div class="service-card__meta">
+                    <span class="service-card__session"><i class="bx bx-calendar"></i> Próxima: Mié - 16:00</span>
+                    <span class="service-card__price">$120,000</span>
+                </div>
+                <button class="service-card__button" type="button">
+                    <i class="bx bx-rocket"></i> Acceder al Panel
+                </button>
+            </div>
+        </article>
+
+        <article class="service-card" data-name="Angular desde Cero" data-price="95000" data-capacity="30" data-category="frontend">
+            <div class="service-card__image">
+                Image
+                <span class="service-card__badge"><i class="bx bx-check"></i> SUSCRITO</span>
+            </div>
+            <div class="service-card__body">
+                <span class="service-card__tag" style="--cat: var(--category-frontend);">Frontend</span>
+                <h3 class="service-card__title">Angular desde Cero</h3>
+                <p class="service-card__text">
+                    Componentes, servicios, RxJS y estado para construir
+                    aplicaciones empresariales.
+                </p>
+                <div class="service-card__meta">
+                    <span class="service-card__session"><i class="bx bx-calendar"></i> Próxima: Jue - 17:00</span>
+                    <span class="service-card__price">$95,000</span>
+                </div>
+                <button class="service-card__button" type="button">
+                    <i class="bx bx-rocket"></i> Acceder al Panel
+                </button>
+            </div>
+        </article>
+
+        <article class="service-card" data-name="Prompt Engineering" data-price="85000" data-capacity="15" data-category="ia">
+            <div class="service-card__image">
+                Image
+                <span class="service-card__badge"><i class="bx bx-check"></i> SUSCRITO</span>
+            </div>
+            <div class="service-card__body">
+                <span class="service-card__tag" style="--cat: var(--category-ai);">IA</span>
+                <h3 class="service-card__title">Prompt Engineering</h3>
+                <p class="service-card__text">
+                    Diseño de instrucciones efectivas para sacar el máximo
+                    provecho a los modelos de IA.
+                </p>
+                <div class="service-card__meta">
+                    <span class="service-card__session"><i class="bx bx-calendar"></i> Próxima: Vie - 19:00</span>
+                    <span class="service-card__price">$85,000</span>
+                </div>
+                <button class="service-card__button" type="button">
+                    <i class="bx bx-rocket"></i> Acceder al Panel
+                </button>
+            </div>
+        </article>
+
+        <article class="service-card" data-name="Pipelines CI/CD con Jenkins" data-price="110000" data-capacity="18" data-category="devops">
+            <div class="service-card__image">
+                Image
+                <span class="service-card__badge"><i class="bx bx-check"></i> SUSCRITO</span>
+            </div>
+            <div class="service-card__body">
+                <span class="service-card__tag" style="--cat: var(--category-devops);">DevOps</span>
+                <h3 class="service-card__title">Pipelines CI/CD con Jenkins</h3>
+                <p class="service-card__text">
+                    Automatización integral: integración continua, pruebas y
+                    entrega automatizada.
+                </p>
+                <div class="service-card__meta">
+                    <span class="service-card__session"><i class="bx bx-calendar"></i> Próxima: Lun - 20:00</span>
+                    <span class="service-card__price">$110,000</span>
+                </div>
+                <button class="service-card__button" type="button">
+                    <i class="bx bx-rocket"></i> Acceder al Panel
+                </button>
+            </div>
+        </article>
+
+        <article class="service-card" data-name="PostgreSQL Avanzado" data-price="75000" data-capacity="22" data-category="databases">
+            <div class="service-card__image">
+                Image
+                <span class="service-card__badge"><i class="bx bx-check"></i> SUSCRITO</span>
+            </div>
+            <div class="service-card__body">
+                <span class="service-card__tag" style="--cat: var(--category-databases);">Bases de Datos</span>
+                <h3 class="service-card__title">PostgreSQL Avanzado</h3>
+                <p class="service-card__text">
+                    Índices, particionamiento, réplicas y optimización de
+                    consultas a gran escala.
+                </p>
+                <div class="service-card__meta">
+                    <span class="service-card__session"><i class="bx bx-calendar"></i> Próxima: Sáb - 10:00</span>
+                    <span class="service-card__price">$75,000</span>
+                </div>
+                <button class="service-card__button" type="button">
+                    <i class="bx bx-rocket"></i> Acceder al Panel
+                </button>
+            </div>
+        </article>
+
+        <p class="services-empty" id="services-empty">
+            No hay servicios que coincidan con la búsqueda o los filtros.
+        </p>
+
+    </div>
+
+</section>
+
+
+<script>
+    /* ============================================================
+       ELEMENTOS
+    ============================================================ */
+    const grid        = document.getElementById('services-grid');
+    const cards       = [...grid.querySelectorAll('.service-card')];
+    const searchField = document.getElementById('search-field');
+    const categorySel = document.getElementById('filter-category');
+    const sortSel     = document.getElementById('sort-by');
+    const emptyMsg    = document.getElementById('services-empty');
+
+
+    /* ============================================================
+       BÚSQUEDA + FILTRO DE CATEGORÍA
+    ============================================================ */
+    function applyFilters() {
+        const query = searchField.value.trim().toLowerCase();
+        const category = categorySel.value;
+
+        let visible = 0;
+
+        cards.forEach(card => {
+            const matchQuery = !query || card.dataset.name.toLowerCase().includes(query);
+            const matchCategory = category === 'todas' || card.dataset.category === category;
+
+            const show = matchQuery && matchCategory;
+            card.style.display = show ? '' : 'none';
+            if (show) visible++;
+        });
+
+        emptyMsg.classList.toggle('is-visible', visible === 0);
+    }
+
+    searchField.addEventListener('input', applyFilters);
+    categorySel.addEventListener('change', applyFilters);
+
+
+    /* ============================================================
+       ORDENAMIENTO
+    ============================================================ */
+    sortSel.addEventListener('change', () => {
+        const value = sortSel.value;
+
+        const sorted = [...cards].sort((a, b) => {
+            switch (value) {
+                case 'az':
+                    return a.dataset.name.localeCompare(b.dataset.name, 'es');
+                case 'za':
+                    return b.dataset.name.localeCompare(a.dataset.name, 'es');
+                case 'price-desc':
+                    return Number(b.dataset.price) - Number(a.dataset.price);
+                case 'price-asc':
+                    return Number(a.dataset.price) - Number(b.dataset.price);
+                case 'capacity':
+                    return Number(b.dataset.capacity) - Number(a.dataset.capacity);
+                default:
+                    return 0;
+            }
+        });
+
+        // Re-insertar las cards en el nuevo orden
+        sorted.forEach(card => grid.appendChild(card));
+
+        applyFilters(); // mantener filtros activos tras reordenar
+    });
+
+
+    /* ============================================================
+       CHIPS DE TECNOLOGÍA (selección múltiple visual)
+       — puedes vincularlos al buscador o a un filtro propio
+    ============================================================ */
+    document.getElementById('tech-chips').addEventListener('click', (e) => {
+        const chip = e.target.closest('.tech-chip');
+        if (chip) chip.classList.toggle('is-selected');
+    });
+</script>
+
+</body>
+</html>
